@@ -53,8 +53,24 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
       { new: true }
     )
     return NextResponse.json({ certificate: cert })
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to update certificate' }, { status: 500 })
+  }
+}
+
+// PATCH — update order only (used by drag-to-reorder)
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const user = getTokenFromRequest(req)
+  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
+  try {
+    await connectDB()
+    const { id } = await params
+    const { order } = await req.json()
+    await SkillCertificate.findByIdAndUpdate(id, { order })
+    return NextResponse.json({ success: true })
+  } catch {
+    return NextResponse.json({ error: 'Failed to update order' }, { status: 500 })
   }
 }
 
