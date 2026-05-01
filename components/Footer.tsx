@@ -1,153 +1,75 @@
-'use client';
+'use client'
 
-import { useState, useEffect } from 'react';
-import { 
-  Github, 
-  Linkedin, 
-  Twitter, 
-  Mail, 
-  Heart, 
-  Sparkles,
-  ChevronUp,
-  MapPin
-} from 'lucide-react';
+import { useState, useEffect } from 'react'
+import { Github, Linkedin, Twitter, Mail, Heart, ChevronUp } from 'lucide-react'
 
-export default function Footer() {
-  const [year, setYear] = useState(2024);
-  const [mounted, setMounted] = useState(false);
+interface FooterProps {
+  settings: {
+    heroName?: string
+    githubUrl?: string
+    linkedinUrl?: string
+    twitterUrl?: string
+    email?: string
+  }
+}
+
+export default function Footer({ settings }: FooterProps) {
+  const [year, setYear] = useState(2025)
 
   useEffect(() => {
-    setMounted(true);
-    setYear(new Date().getFullYear());
-  }, []);
+    setYear(new Date().getFullYear())
+  }, [])
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const socialLinks = [
-    { icon: Github, href: 'https://github.com/atuljha-tech', label: 'GitHub', username: '@atuljha-tech' },
-    { icon: Linkedin, href: 'https://linkedin.com/in/atuljha275', label: 'LinkedIn', username: '@atuljha275' },
-    { icon: Twitter, href: 'https://twitter.com/atuljhatwitter', label: 'Twitter', username: '@atuljhatwitter' },
-    { icon: Mail, href: 'mailto:atuljha275@gmail.com', label: 'Email', username: 'atuljha275' },
-  ];
-
-  // Fixed particles for footer
-  const particles = mounted ? [...Array(6)].map((_, i) => {
-    const top = (i * 20 + 5) % 90 + 5;
-    const left = (i * 25 + 10) % 90 + 5;
-    return { top, left, key: i };
-  }) : [];
+  const socials = [
+    settings.githubUrl && { icon: Github, href: settings.githubUrl, label: 'GitHub' },
+    settings.linkedinUrl && { icon: Linkedin, href: settings.linkedinUrl, label: 'LinkedIn' },
+    settings.twitterUrl && { icon: Twitter, href: settings.twitterUrl, label: 'Twitter' },
+    settings.email && { icon: Mail, href: `mailto:${settings.email}`, label: 'Email' },
+  ].filter(Boolean) as { icon: React.ElementType; href: string; label: string }[]
 
   return (
     <footer className="relative bg-gradient-to-b from-[#0A0F1C] to-[#05080F] py-12 overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Simple gradient orbs */}
-        <div className="absolute top-20 -left-20 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 -right-20 w-64 h-64 bg-pink-600/10 rounded-full blur-3xl" />
-        
-        {/* Minimal grid pattern */}
-        <div className="absolute inset-0 opacity-20" style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(139, 92, 246, 0.05) 1px, transparent 0)`,
-          backgroundSize: '40px 40px'
-        }} />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/30 to-transparent" />
 
-        {/* Floating particles */}
-        {particles.map((p) => (
-          <div
-            key={p.key}
-            className="absolute w-0.5 h-0.5 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"
-            style={{
-              top: `${p.top}%`,
-              left: `${p.left}%`,
-              opacity: 0.15
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Top gradient line */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Main content - simplified */}
-        <div className="flex flex-col items-center text-center mb-10">
-          {/* Signature */}
-          <a 
-            href="#home" 
-            className="inline-block mb-3"
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex flex-col items-center text-center">
+          <span
+            className="text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text mb-6"
+            style={{ fontFamily: 'var(--font-dancing), cursive' }}
           >
-            <span className="text-2xl md:text-3xl font-bold" style={{ fontFamily: "'Dancing Script', 'cursive'" }}>
-              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text">
-                Atul Jha
-              </span>
-            </span>
-          </a>
-          
-          {/* Location */}
-          <div className="flex items-center gap-2 mb-6">
-            <MapPin className="w-3 h-3 text-slate-500" />
-            <span className="text-xs text-slate-500">Heritage Institute of Technology</span>
-          </div>
+            {settings.heroName || 'Atul Jha'}
+          </span>
 
-          {/* Social links - horizontal */}
-          <div className="flex items-center gap-4 mb-8">
-            {socialLinks.map((social, index) => (
+          <div className="flex items-center gap-3 mb-8">
+            {socials.map(({ icon: Icon, href, label }) => (
               <a
-                key={index}
-                href={social.href}
-                target="_blank"
+                key={label}
+                href={href}
+                target={href.startsWith('mailto') ? undefined : '_blank'}
                 rel="noopener noreferrer"
-                className="group relative"
-                aria-label={social.label}
+                className="w-10 h-10 rounded-full bg-[#0D1424] border border-slate-800 hover:border-purple-500/50 flex items-center justify-center transition-all hover:scale-110"
+                aria-label={label}
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full opacity-0 group-hover:opacity-30 blur transition-opacity duration-500" />
-                <div className="relative w-10 h-10 rounded-full bg-[#0D1424] border border-slate-800 group-hover:border-transparent flex items-center justify-center transition-all duration-300 hover:scale-110">
-                  <social.icon className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" />
-                </div>
+                <Icon className="w-4 h-4 text-slate-400 hover:text-white transition-colors" />
               </a>
             ))}
           </div>
 
-          {/* Simple quote */}
-          <p className="text-sm text-slate-400 max-w-md mx-auto mb-8 font-light italic">
-            "Building the future with blockchain, IoT, and full-stack magic"
-          </p>
-        </div>
-
-        {/* Bottom bar - very simple */}
-        <div className="relative pt-6 border-t border-slate-800/50">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-xs text-slate-600 font-mono">
-              © {year} Atul Jha
+          <div className="flex items-center justify-between w-full pt-6 border-t border-slate-800/50">
+            <p className="text-xs text-slate-600 font-mono">© {year} {settings.heroName || 'Atul Jha'}</p>
+            <p className="text-xs text-slate-600 font-mono flex items-center gap-1">
+              Made with <Heart className="w-3 h-3 text-pink-500 animate-pulse" /> in India
             </p>
-            
-            <div className="flex items-center gap-4">
-              <p className="text-xs text-slate-600 font-mono flex items-center gap-1">
-                <span>Made with</span>
-                <Heart className="w-3 h-3 text-pink-500 animate-pulse" />
-                <span>in India</span>
-              </p>
-              
-              {/* Back to top button */}
-              <button
-                onClick={scrollToTop}
-                className="group relative w-8 h-8"
-                aria-label="Back to top"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full opacity-0 group-hover:opacity-30 blur transition-opacity" />
-                <div className="relative w-full h-full rounded-full bg-[#0D1424] border border-slate-800 group-hover:border-transparent flex items-center justify-center transition-all duration-300 hover:scale-110">
-                  <ChevronUp className="w-4 h-4 text-slate-400 group-hover:text-white group-hover:-translate-y-0.5 transition-all" />
-                </div>
-              </button>
-            </div>
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="w-8 h-8 rounded-full bg-[#0D1424] border border-slate-800 hover:border-purple-500/50 flex items-center justify-center transition-all hover:scale-110"
+              aria-label="Back to top"
+            >
+              <ChevronUp className="w-4 h-4 text-slate-400" />
+            </button>
           </div>
         </div>
       </div>
-
-      {/* Add Google Font for signature */}
-      <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet" />
     </footer>
-  );
+  )
 }
