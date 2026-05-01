@@ -1,9 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { useRef } from 'react'
-import { Github, Star, GitFork, Users, Flame, Code2, Trophy, Zap } from 'lucide-react'
+import {
+  Github, Star, GitFork, Users, Flame, Code2, Trophy,
+  Zap, TrendingUp, Activity
+} from 'lucide-react'
 
 interface GitHubData {
   username: string
@@ -29,110 +31,270 @@ interface LeetCodeData {
   submissionDays: { date: string; count: number }[]
 }
 
-function ContributionHeatmap({ data }: { data: { date: string; count: number }[] }) {
+// ── Animated counter ──────────────────────────────────────────────────────────
+function Counter({ value, duration = 1200 }: { value: number; duration?: number }) {
+  const [display, setDisplay] = useState(0)
+  useEffect(() => {
+    let start = 0
+    const step = value / (duration / 16)
+    const timer = setInterval(() => {
+      start += step
+      if (start >= value) { setDisplay(value); clearInterval(timer) }
+      else setDisplay(Math.floor(start))
+    }, 16)
+    return () => clearInterval(timer)
+  }, [value, duration])
+  return <>{display.toLocaleString()}</>
+}
+
+// ── GitHub heatmap ────────────────────────────────────────────────────────────
+function GithubHeatmap({ data }: { data: { date: string; count: number }[] }) {
   if (!data.length) return null
 
-  const getColor = (count: number) => {
-    if (count === 0) return 'bg-slate-800'
-    if (count <= 2) return 'bg-green-900'
-    if (count <= 5) return 'bg-green-700'
-    if (count <= 9) return 'bg-green-500'
-    return 'bg-green-400'
+  const getLevel = (count: number) => {
+    if (count === 0) return 0
+    if (count <= 2) return 1
+    if (count <= 5) return 2
+    if (count <= 9) return 3
+    return 4
   }
 
-  // Group into weeks
+  const colors = [
+    'bg-slate-800/80',
+    'bg-emerald-900',
+    'bg-emerald-700',
+    'bg-emerald-500',
+    'bg-emerald-400',
+  ]
+
+  // Build weeks
   const weeks: { date: string; count: number }[][] = []
   let week: { date: string; count: number }[] = []
   data.forEach((day, i) => {
     week.push(day)
     if (week.length === 7 || i === data.length - 1) {
-      weeks.push(week)
+      weeks.push([...week])
       week = []
     }
   })
 
+  // Month labels
+  const monthLabels: { label: string; col: number }[] = []
+  weeks.forEach((w, wi) => {
+    const d = new Date(w[0]?.date)
+    if (d && (wi === 0 || new Date(weeks[wi - 1]?.[0]?.date).getMonth() !== d.getMonth())) {
+      monthLabels.push({
+        label: d.toLocaleString('default', { month: 'short' }),
+        col: wi,
+      })
+    }
+  })
+
   return (
-    <div className="overflow-x-auto">
-      <div className="flex gap-0.5 min-w-max">
-        {weeks.map((w, wi) => (
-          <div key={wi} className="flex flex-col gap-0.5">
-            {w.map((day, di) => (
-              <div
-                key={di}
-                title={`${day.date}: ${day.count} contributions`}
-                className={`w-2.5 h-2.5 rounded-sm ${getColor(day.count)} transition-colors hover:opacity-80`}
-              />
-            ))}
-          </div>
-        ))}
+    <div className="overflow-x-auto pb-1">
+      <div className="relative min-w-max">
+        {/* Month labels */}
+        <div className="flex mb-1" style={{ paddingLeft: '0px' }}>
+          {monthLabels.map((m, i) => (
+            <div
+              key={i}
+              className="text-[10px] text-slate-500 absolute"
+              style={{ left: `${m.col * 13}px` }}
+            >
+              {m.label}
+            </div>
+          ))}
+        </div>
+        <div className="flex gap-[3px] mt-4">
+          {weeks.map((w, wi) => (
+            <div key={wi} className="flex flex-col gap-[3px]">
+              {w.map((day, di) => (
+                <div
+                  key={di}
+                  title={`${day.date}: ${day.count} contributions`}
+                  className={`w-[10px] h-[10px] rounded-[2px] ${colors[getLevel(day.count)]} hover:ring-1 hover:ring-white/20 transition-all cursor-default`}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+        {/* Legend */}
+        <div className="flex items-center gap-1.5 mt-3 justify-end">
+          <span className="text-[10px] text-slate-600">Less</span>
+          {colors.map((c, i) => (
+            <div key={i} className={`w-[10px] h-[10px] rounded-[2px] ${c}`} />
+          ))}
+          <span className="text-[10px] text-slate-600">More</span>
+        </div>
       </div>
     </div>
   )
 }
 
-function LeetCodeHeatmap({ data }: { data: { date: string; count: number }[] }) {
+// ── LeetCode heatmap ──────────────────────────────────────────────────────────
+function LeetHeatmap({ data }: { data: { date: string; count: number }[] }) {
   if (!data.length) return null
 
-  // Last 6 months
   const sixMonthsAgo = new Date()
   sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6)
   const filtered = data
     .filter((d) => new Date(d.date) >= sixMonthsAgo)
     .sort((a, b) => a.date.localeCompare(b.date))
 
-  const getColor = (count: number) => {
-    if (count === 0) return 'bg-slate-800'
-    if (count <= 2) return 'bg-orange-900'
-    if (count <= 5) return 'bg-orange-700'
-    if (count <= 9) return 'bg-orange-500'
-    return 'bg-orange-400'
+  const getLevel = (count: number) => {
+    if (count === 0) return 0
+    if (count <= 2) return 1
+    if (count <= 5) return 2
+    if (count <= 9) return 3
+    return 4
   }
+
+  const colors = [
+    'bg-slate-800/80',
+    'bg-orange-900',
+    'bg-orange-700',
+    'bg-orange-500',
+    'bg-orange-400',
+  ]
 
   const weeks: { date: string; count: number }[][] = []
   let week: { date: string; count: number }[] = []
   filtered.forEach((day, i) => {
     week.push(day)
     if (week.length === 7 || i === filtered.length - 1) {
-      weeks.push(week)
+      weeks.push([...week])
       week = []
     }
   })
 
   return (
-    <div className="overflow-x-auto">
-      <div className="flex gap-0.5 min-w-max">
-        {weeks.map((w, wi) => (
-          <div key={wi} className="flex flex-col gap-0.5">
-            {w.map((day, di) => (
-              <div
-                key={di}
-                title={`${day.date}: ${day.count} submissions`}
-                className={`w-2.5 h-2.5 rounded-sm ${getColor(day.count)} transition-colors hover:opacity-80`}
-              />
-            ))}
-          </div>
-        ))}
+    <div className="overflow-x-auto pb-1">
+      <div className="min-w-max">
+        <div className="flex gap-[3px]">
+          {weeks.map((w, wi) => (
+            <div key={wi} className="flex flex-col gap-[3px]">
+              {w.map((day, di) => (
+                <div
+                  key={di}
+                  title={`${day.date}: ${day.count} submissions`}
+                  className={`w-[10px] h-[10px] rounded-[2px] ${colors[getLevel(day.count)]} hover:ring-1 hover:ring-white/20 transition-all cursor-default`}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+        <div className="flex items-center gap-1.5 mt-3 justify-end">
+          <span className="text-[10px] text-slate-600">Less</span>
+          {colors.map((c, i) => (
+            <div key={i} className={`w-[10px] h-[10px] rounded-[2px] ${c}`} />
+          ))}
+          <span className="text-[10px] text-slate-600">More</span>
+        </div>
       </div>
     </div>
   )
 }
 
-function StatCard({ label, value, icon: Icon, color }: {
-  label: string; value: string | number; icon: React.ElementType; color: string
+// ── Circular progress ─────────────────────────────────────────────────────────
+function CircularProgress({ solved, total, size = 120 }: { solved: number; total: number; size?: number }) {
+  const r = 46
+  const circ = 2 * Math.PI * r
+  const pct = Math.min(solved / total, 1)
+  const dash = pct * circ
+
+  return (
+    <div className="relative" style={{ width: size, height: size }}>
+      <svg width={size} height={size} viewBox="0 0 100 100" className="-rotate-90">
+        {/* Track */}
+        <circle cx="50" cy="50" r={r} fill="none" stroke="#1e293b" strokeWidth="7" />
+        {/* Progress */}
+        <circle
+          cx="50" cy="50" r={r} fill="none"
+          stroke="url(#lcGrad)" strokeWidth="7"
+          strokeDasharray={`${dash} ${circ}`}
+          strokeLinecap="round"
+          style={{ transition: 'stroke-dasharray 1.2s ease' }}
+        />
+        <defs>
+          <linearGradient id="lcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#f97316" />
+            <stop offset="100%" stopColor="#facc15" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <span className="text-white font-black text-2xl leading-none">{solved}</span>
+        <span className="text-slate-500 text-[11px] mt-0.5">/ {total}</span>
+      </div>
+    </div>
+  )
+}
+
+// ── Difficulty bar ────────────────────────────────────────────────────────────
+function DiffBar({ label, solved, total, color }: {
+  label: string; solved: number; total: number; color: string
 }) {
   return (
-    <div className="bg-slate-800/40 rounded-xl p-4 flex items-center gap-3">
-      <div className={`w-9 h-9 rounded-lg ${color} flex items-center justify-center shrink-0`}>
-        <Icon className="w-4 h-4 text-white" />
+    <div>
+      <div className="flex items-center justify-between mb-1">
+        <span className={`text-xs font-semibold ${color}`}>{label}</span>
+        <span className="text-xs text-slate-400 font-mono">{solved}<span className="text-slate-600">/{total}</span></span>
       </div>
-      <div>
-        <p className="text-white font-bold text-lg leading-none">{value}</p>
-        <p className="text-slate-500 text-xs mt-0.5">{label}</p>
+      <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+        <motion.div
+          initial={{ width: 0 }}
+          animate={{ width: `${(solved / total) * 100}%` }}
+          transition={{ duration: 1, delay: 0.5 }}
+          className={`h-full rounded-full ${color.replace('text-', 'bg-')}`}
+        />
       </div>
     </div>
   )
 }
 
+// ── Mini stat pill ────────────────────────────────────────────────────────────
+function Pill({ icon: Icon, label, value, accent }: {
+  icon: React.ElementType; label: string; value: string | number; accent: string
+}) {
+  return (
+    <div className={`flex items-center gap-2.5 px-4 py-3 rounded-xl bg-slate-800/40 border border-slate-700/40 hover:border-${accent}-500/30 transition-colors group`}>
+      <div className={`w-8 h-8 rounded-lg bg-${accent}-500/15 flex items-center justify-center shrink-0`}>
+        <Icon className={`w-3.5 h-3.5 text-${accent}-400`} />
+      </div>
+      <div>
+        <p className="text-white font-bold text-sm leading-none">{value}</p>
+        <p className="text-slate-500 text-[11px] mt-0.5">{label}</p>
+      </div>
+    </div>
+  )
+}
+
+// ── Skeleton loader ───────────────────────────────────────────────────────────
+function Skeleton() {
+  return (
+    <div className="grid lg:grid-cols-2 gap-6">
+      {[0, 1].map((i) => (
+        <div key={i} className="bg-[#0D1424] rounded-2xl border border-slate-800/50 p-6 space-y-4 animate-pulse">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-slate-800" />
+            <div className="space-y-2">
+              <div className="w-24 h-4 bg-slate-800 rounded" />
+              <div className="w-16 h-3 bg-slate-800 rounded" />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            {[0, 1, 2, 3].map((j) => (
+              <div key={j} className="h-14 bg-slate-800 rounded-xl" />
+            ))}
+          </div>
+          <div className="h-20 bg-slate-800 rounded-xl" />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+// ── Main component ────────────────────────────────────────────────────────────
 export default function Stats() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, amount: 0.1 })
@@ -155,201 +317,202 @@ export default function Stats() {
     <section
       ref={ref}
       id="stats"
-      className="relative py-24 px-6 overflow-hidden bg-linear-to-b from-[#0A0F1C] via-[#0D1424] to-[#0A0F1C]"
+      className="relative py-24 px-6 overflow-hidden bg-[#0A0F1C]"
     >
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 -left-20 w-80 h-80 bg-green-600/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 -right-20 w-80 h-80 bg-orange-600/5 rounded-full blur-3xl" />
+      {/* Background glows */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-emerald-600/8 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-orange-600/8 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/5 rounded-full blur-3xl" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto">
-        {/* Header */}
+
+        {/* ── Section header ── */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-xs font-mono tracking-widest text-green-400 mb-4 block">LIVE STATS</span>
-          <h2 className="text-5xl md:text-6xl font-black text-white">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#0D1424] border border-slate-800 rounded-full mb-6">
+            <Activity className="w-3.5 h-3.5 text-emerald-400" />
+            <span className="text-xs font-mono tracking-widest text-transparent bg-clip-text bg-linear-to-r from-emerald-400 to-teal-400">
+              LIVE CODING STATS
+            </span>
+            <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+          </div>
+
+          <h2 className="text-5xl md:text-6xl font-black text-white mb-4">
             Coding{' '}
-            <span className="bg-linear-to-r from-green-400 via-teal-400 to-blue-400 text-transparent bg-clip-text">
+            <span className="bg-linear-to-r from-emerald-400 via-teal-400 to-blue-400 text-transparent bg-clip-text">
               Activity
             </span>
           </h2>
-          <p className="text-slate-400 mt-4 max-w-xl mx-auto">
-            Real-time stats pulled directly from GitHub & LeetCode
+          <p className="text-slate-400 max-w-lg mx-auto">
+            Real-time stats pulled directly from GitHub & LeetCode APIs — updates every hour automatically
           </p>
         </motion.div>
 
+        {/* ── Cards ── */}
         {loading ? (
-          <div className="flex items-center justify-center py-20">
-            <div className="w-8 h-8 border-2 border-purple-500/30 border-t-purple-500 rounded-full animate-spin" />
-          </div>
+          <Skeleton />
         ) : (
           <div className="grid lg:grid-cols-2 gap-6">
-            {/* GitHub Card */}
+
+            {/* ── GitHub Card ── */}
             {github && (
               <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.2 }}
+                initial={{ opacity: 0, y: 30 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.15 }}
                 className="relative group"
               >
-                <div className="absolute -inset-0.5 bg-linear-to-r from-green-500/30 to-teal-500/30 rounded-2xl opacity-0 group-hover:opacity-100 blur transition-opacity duration-500" />
-                <div className="relative bg-[#0D1424] rounded-2xl border border-slate-800/50 p-6">
-                  {/* Header */}
-                  <div className="flex items-center gap-3 mb-5">
-                    <div className="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center">
-                      <Github className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="text-white font-bold">GitHub</h3>
-                      <a
-                        href={`https://github.com/${github.username}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs text-slate-400 hover:text-green-400 transition-colors"
-                      >
-                        @{github.username}
-                      </a>
-                    </div>
-                    <div className="ml-auto flex items-center gap-1.5 px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-full">
-                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-                      <span className="text-xs text-green-400 font-mono">LIVE</span>
-                    </div>
-                  </div>
+                {/* Glow border */}
+                <div className="absolute -inset-px bg-linear-to-br from-emerald-500/40 via-transparent to-teal-500/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-                  {/* Stats grid */}
-                  <div className="grid grid-cols-2 gap-3 mb-5">
-                    <StatCard label="Repositories" value={github.publicRepos} icon={GitFork} color="bg-green-600" />
-                    <StatCard label="Total Stars" value={github.totalStars} icon={Star} color="bg-yellow-600" />
-                    <StatCard label="Current Streak" value={`${github.currentStreak}d`} icon={Flame} color="bg-orange-600" />
-                    <StatCard label="Max Streak" value={`${github.maxStreak}d`} icon={Zap} color="bg-purple-600" />
-                  </div>
+                <div className="relative bg-[#0D1424] rounded-2xl border border-slate-800/60 overflow-hidden">
+                  {/* Top accent */}
+                  <div className="h-0.5 bg-linear-to-r from-emerald-500 via-teal-500 to-blue-500" />
 
-                  {/* Contribution heatmap */}
-                  <div>
-                    <div className="flex items-center justify-between mb-3">
-                      <p className="text-xs text-slate-400 font-mono">
-                        {github.totalContributions.toLocaleString()} contributions this year
-                      </p>
-                      <div className="flex items-center gap-1">
-                        <span className="text-xs text-slate-600">Less</span>
-                        {['bg-slate-800', 'bg-green-900', 'bg-green-700', 'bg-green-500', 'bg-green-400'].map((c, i) => (
-                          <div key={i} className={`w-2.5 h-2.5 rounded-sm ${c}`} />
-                        ))}
-                        <span className="text-xs text-slate-600">More</span>
+                  <div className="p-6">
+                    {/* Card header */}
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="flex items-center gap-3">
+                        <div className="w-11 h-11 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center">
+                          <Github className="w-5 h-5 text-white" />
+                        </div>
+                        <div>
+                          <h3 className="text-white font-bold text-base">GitHub</h3>
+                          <a
+                            href={`https://github.com/${github.username}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs text-slate-500 hover:text-emerald-400 transition-colors"
+                          >
+                            @{github.username}
+                          </a>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full">
+                        <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+                        <span className="text-[11px] text-emerald-400 font-mono font-medium">LIVE</span>
                       </div>
                     </div>
-                    <ContributionHeatmap data={github.contributions} />
+
+                    {/* Stats pills */}
+                    <div className="grid grid-cols-2 gap-2.5 mb-6">
+                      <Pill icon={GitFork} label="Repositories" value={github.publicRepos} accent="emerald" />
+                      <Pill icon={Star} label="Total Stars" value={github.totalStars} accent="yellow" />
+                      <Pill icon={Flame} label="Current Streak" value={`${github.currentStreak} days`} accent="orange" />
+                      <Pill icon={Zap} label="Max Streak" value={`${github.maxStreak} days`} accent="purple" />
+                    </div>
+
+                    {/* Total contributions banner */}
+                    <div className="flex items-center justify-between px-4 py-3 bg-emerald-500/8 border border-emerald-500/15 rounded-xl mb-5">
+                      <div className="flex items-center gap-2">
+                        <TrendingUp className="w-4 h-4 text-emerald-400" />
+                        <span className="text-sm text-slate-300">Contributions this year</span>
+                      </div>
+                      <span className="text-emerald-400 font-black text-lg font-mono">
+                        <Counter value={github.totalContributions} />
+                      </span>
+                    </div>
+
+                    {/* Heatmap */}
+                    <div className="bg-slate-900/50 rounded-xl p-4 border border-slate-800/50">
+                      <p className="text-[11px] text-slate-500 font-mono mb-3 uppercase tracking-wider">
+                        Contribution Graph
+                      </p>
+                      <GithubHeatmap data={github.contributions} />
+                    </div>
                   </div>
                 </div>
               </motion.div>
             )}
 
-            {/* LeetCode Card */}
+            {/* ── LeetCode Card ── */}
             {leetcode && (
               <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                animate={inView ? { opacity: 1, x: 0 } : {}}
+                initial={{ opacity: 0, y: 30 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.3 }}
                 className="relative group"
               >
-                <div className="absolute -inset-0.5 bg-linear-to-r from-orange-500/30 to-yellow-500/30 rounded-2xl opacity-0 group-hover:opacity-100 blur transition-opacity duration-500" />
-                <div className="relative bg-[#0D1424] rounded-2xl border border-slate-800/50 p-6">
-                  {/* Header */}
-                  <div className="flex items-center gap-3 mb-5">
-                    <div className="w-10 h-10 rounded-xl bg-orange-500/20 flex items-center justify-center">
-                      <span className="text-lg">🧩</span>
-                    </div>
-                    <div>
-                      <h3 className="text-white font-bold">LeetCode</h3>
-                      <a
-                        href={`https://leetcode.com/${leetcode.username}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs text-slate-400 hover:text-orange-400 transition-colors"
-                      >
-                        @{leetcode.username}
-                      </a>
-                    </div>
-                    <div className="ml-auto flex items-center gap-1.5 px-3 py-1 bg-orange-500/10 border border-orange-500/20 rounded-full">
-                      <div className="w-1.5 h-1.5 bg-orange-500 rounded-full animate-pulse" />
-                      <span className="text-xs text-orange-400 font-mono">LIVE</span>
-                    </div>
-                  </div>
+                <div className="absolute -inset-px bg-linear-to-br from-orange-500/40 via-transparent to-yellow-500/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-                  {/* Solved ring + breakdown */}
-                  <div className="flex items-center gap-6 mb-5">
-                    {/* Circle */}
-                    <div className="relative w-24 h-24 shrink-0">
-                      <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
-                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="#1e293b" strokeWidth="3" />
-                        <circle
-                          cx="18" cy="18" r="15.9" fill="none"
-                          stroke="url(#leetGrad)" strokeWidth="3"
-                          strokeDasharray={`${(leetcode.totalSolved / 3916) * 100} 100`}
-                          strokeLinecap="round"
-                        />
-                        <defs>
-                          <linearGradient id="leetGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" stopColor="#f97316" />
-                            <stop offset="100%" stopColor="#eab308" />
-                          </linearGradient>
-                        </defs>
-                      </svg>
-                      <div className="absolute inset-0 flex flex-col items-center justify-center">
-                        <span className="text-white font-black text-lg leading-none">{leetcode.totalSolved}</span>
-                        <span className="text-slate-500 text-xs">solved</span>
+                <div className="relative bg-[#0D1424] rounded-2xl border border-slate-800/60 overflow-hidden">
+                  <div className="h-0.5 bg-linear-to-r from-orange-500 via-yellow-500 to-amber-400" />
+
+                  <div className="p-6">
+                    {/* Card header */}
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="flex items-center gap-3">
+                        <div className="w-11 h-11 rounded-xl bg-orange-500/15 border border-orange-500/20 flex items-center justify-center text-xl">
+                          🧩
+                        </div>
+                        <div>
+                          <h3 className="text-white font-bold text-base">LeetCode</h3>
+                          <a
+                            href={`https://leetcode.com/${leetcode.username}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs text-slate-500 hover:text-orange-400 transition-colors"
+                          >
+                            @{leetcode.username}
+                          </a>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-500/10 border border-orange-500/20 rounded-full">
+                        <div className="w-1.5 h-1.5 bg-orange-500 rounded-full animate-pulse" />
+                        <span className="text-[11px] text-orange-400 font-mono font-medium">LIVE</span>
                       </div>
                     </div>
 
-                    {/* Breakdown */}
-                    <div className="space-y-2 flex-1">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs text-green-400 font-medium">Easy</span>
-                        <span className="text-xs text-white font-mono">{leetcode.easySolved}</span>
+                    {/* Solved ring + difficulty */}
+                    <div className="flex items-center gap-6 mb-6 p-4 bg-slate-900/50 rounded-xl border border-slate-800/50">
+                      <div className="shrink-0">
+                        <CircularProgress solved={leetcode.totalSolved} total={3916} size={110} />
+                        <p className="text-center text-[11px] text-slate-500 mt-1.5">Problems Solved</p>
                       </div>
-                      <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                        <div className="h-full bg-green-500 rounded-full" style={{ width: `${(leetcode.easySolved / 940) * 100}%` }} />
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs text-yellow-400 font-medium">Medium</span>
-                        <span className="text-xs text-white font-mono">{leetcode.mediumSolved}</span>
-                      </div>
-                      <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                        <div className="h-full bg-yellow-500 rounded-full" style={{ width: `${(leetcode.mediumSolved / 2048) * 100}%` }} />
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs text-red-400 font-medium">Hard</span>
-                        <span className="text-xs text-white font-mono">{leetcode.hardSolved}</span>
-                      </div>
-                      <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                        <div className="h-full bg-red-500 rounded-full" style={{ width: `${(leetcode.hardSolved / 928) * 100}%` }} />
+                      <div className="flex-1 space-y-3">
+                        <DiffBar label="Easy" solved={leetcode.easySolved} total={940} color="text-emerald-400" />
+                        <DiffBar label="Medium" solved={leetcode.mediumSolved} total={2048} color="text-yellow-400" />
+                        <DiffBar label="Hard" solved={leetcode.hardSolved} total={928} color="text-red-400" />
                       </div>
                     </div>
-                  </div>
 
-                  {/* Stats row */}
-                  <div className="grid grid-cols-3 gap-3 mb-5">
-                    <StatCard label="Streak" value={`${leetcode.streak}d`} icon={Flame} color="bg-orange-600" />
-                    <StatCard label="Active Days" value={leetcode.totalActiveDays} icon={Code2} color="bg-yellow-600" />
-                    <StatCard label="Ranking" value={`#${leetcode.ranking.toLocaleString()}`} icon={Trophy} color="bg-purple-600" />
-                  </div>
+                    {/* Stats pills */}
+                    <div className="grid grid-cols-3 gap-2.5 mb-6">
+                      <Pill icon={Flame} label="Streak" value={`${leetcode.streak}d`} accent="orange" />
+                      <Pill icon={Code2} label="Active Days" value={leetcode.totalActiveDays} accent="yellow" />
+                      <Pill icon={Trophy} label="Rank" value={`#${leetcode.ranking.toLocaleString()}`} accent="purple" />
+                    </div>
 
-                  {/* Submission heatmap */}
-                  <div>
-                    <p className="text-xs text-slate-400 font-mono mb-3">
-                      Submission activity (last 6 months)
-                    </p>
-                    <LeetCodeHeatmap data={leetcode.submissionDays} />
+                    {/* Heatmap */}
+                    <div className="bg-slate-900/50 rounded-xl p-4 border border-slate-800/50">
+                      <p className="text-[11px] text-slate-500 font-mono mb-3 uppercase tracking-wider">
+                        Submission Activity (6 months)
+                      </p>
+                      <LeetHeatmap data={leetcode.submissionDays} />
+                    </div>
                   </div>
                 </div>
               </motion.div>
             )}
+
           </div>
         )}
+
+        {/* ── Footer note ── */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ delay: 0.8 }}
+          className="text-center text-xs text-slate-700 font-mono mt-8 tracking-wider"
+        >
+          • DATA REFRESHES EVERY HOUR • POWERED BY PUBLIC APIS •
+        </motion.p>
       </div>
     </section>
   )
