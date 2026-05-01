@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Menu, X, FileText, Home, User, Code, Briefcase, Mail, Award, Star } from 'lucide-react'
+import { Menu, X, FileText, Home, User, Code, Briefcase, Mail, Award, Star, BarChart2 } from 'lucide-react'
 
 interface NavbarProps {
   settings: {
@@ -16,6 +16,7 @@ const navLinks = [
   { href: '#projects', label: 'Projects', icon: Briefcase },
   { href: '#skill-certs', label: 'Certifications', icon: Star },
   { href: '#skills', label: 'Skills', icon: Code },
+  { href: '#stats', label: 'Stats', icon: BarChart2 },
   { href: '#hackathons', label: 'Hackathons', icon: Award },
   { href: '#contact', label: 'Contact', icon: Mail },
 ]

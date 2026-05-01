@@ -11,6 +11,7 @@ import HackathonCertificates from '@/components/HackathonCertificates'
 import Projects from '@/components/Projects'
 import SkillCertificates from '@/components/SkillCertificates'
 import Skills from '@/components/Skills'
+import Stats from '@/components/Stats'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 
@@ -66,6 +67,7 @@ export default async function Home() {
         <Projects projects={p} />
         <SkillCertificates certificates={sc} />
         <Skills skills={sk} />
+        <Stats />
         <HackathonCertificates certificates={hc} />
         <Contact settings={s} />
       </main>
