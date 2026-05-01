@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Plus, Pencil, Trophy } from 'lucide-react'
 import DeleteConfirm from '@/components/admin/DeleteConfirm'
+import { SortableList } from '@/components/admin/SortableList'
 import toast from 'react-hot-toast'
 
 interface Cert {
@@ -27,8 +28,7 @@ export default function HackathonList({ initialCerts }: { initialCerts: Cert[] }
   }
 
   return (
-    <div className="max-w-5xl mx-auto">
-      {/* Header */}
+    <div className="max-w-3xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-white flex items-center gap-2">
@@ -36,7 +36,8 @@ export default function HackathonList({ initialCerts }: { initialCerts: Cert[] }
             Hackathon Certificates
           </h1>
           <p className="text-slate-400 text-sm mt-1">
-            {certs.length} certificate{certs.length !== 1 ? 's' : ''}
+            {certs.length} certificate{certs.length !== 1 ? 's' : ''} —{' '}
+            <span className="text-slate-500">drag ☰ to reorder</span>
           </p>
         </div>
         <Link
@@ -61,32 +62,24 @@ export default function HackathonList({ initialCerts }: { initialCerts: Cert[] }
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {certs.map((cert) => (
-            <div
-              key={cert._id}
-              className="group bg-[#0D1424] rounded-2xl border border-slate-800/50 overflow-hidden hover:border-slate-700 transition-colors"
-            >
-              {/* Image */}
-              {cert.image ? (
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <img
-                    src={cert.image}
-                    alt={cert.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-              ) : (
-                <div className="aspect-[4/3] bg-linear-to-br from-yellow-500/10 to-orange-500/10 flex items-center justify-center">
-                  <Trophy className="w-10 h-10 text-yellow-400/30" />
-                </div>
-              )}
-
-              {/* Title + actions */}
-              <div className="p-3 flex items-center justify-between gap-2">
-                <p className="text-white text-xs font-medium line-clamp-2 flex-1">
-                  {cert.title}
-                </p>
+        <SortableList
+          items={certs}
+          onReorder={setCerts}
+          apiEndpoint="/api/hackathon-certificates"
+          renderItem={(cert) => (
+            <div className="bg-[#0D1424] rounded-2xl border border-slate-800/50 overflow-hidden hover:border-slate-700 transition-colors">
+              <div className="flex items-center gap-3 p-3">
+                {/* Thumbnail */}
+                {cert.image ? (
+                  <div className="w-20 h-14 rounded-lg overflow-hidden shrink-0">
+                    <img src={cert.image} alt={cert.title} className="w-full h-full object-cover" />
+                  </div>
+                ) : (
+                  <div className="w-20 h-14 rounded-lg bg-yellow-500/10 flex items-center justify-center shrink-0">
+                    <Trophy className="w-6 h-6 text-yellow-400/40" />
+                  </div>
+                )}
+                <p className="text-white text-sm font-medium flex-1 line-clamp-2">{cert.title}</p>
                 <div className="flex items-center gap-1 shrink-0">
                   <Link
                     href={`/admin/hackathons/${cert._id}/edit`}
@@ -98,8 +91,8 @@ export default function HackathonList({ initialCerts }: { initialCerts: Cert[] }
                 </div>
               </div>
             </div>
-          ))}
-        </div>
+          )}
+        />
       )}
     </div>
   )

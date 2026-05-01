@@ -13,10 +13,10 @@ interface NavbarProps {
 const navLinks = [
   { href: '#home', label: 'Home', icon: Home },
   { href: '#about', label: 'About', icon: User },
-  { href: '#hackathons', label: 'Hackathons', icon: Award },
   { href: '#projects', label: 'Projects', icon: Briefcase },
   { href: '#skill-certs', label: 'Certifications', icon: Star },
   { href: '#skills', label: 'Skills', icon: Code },
+  { href: '#hackathons', label: 'Hackathons', icon: Award },
   { href: '#contact', label: 'Contact', icon: Mail },
 ]
 

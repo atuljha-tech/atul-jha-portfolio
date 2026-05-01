@@ -63,10 +63,10 @@ export default async function Home() {
       <main>
         <Hero settings={s} />
         <About settings={s} />
-        <HackathonCertificates certificates={hc} />
         <Projects projects={p} />
         <SkillCertificates certificates={sc} />
         <Skills skills={sk} />
+        <HackathonCertificates certificates={hc} />
         <Contact settings={s} />
       </main>
       <Footer settings={s} />
