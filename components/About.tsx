@@ -35,7 +35,7 @@ export default function About({ settings }: AboutProps) {
     <section
       ref={ref}
       id="about"
-      className="relative py-24 px-6 overflow-hidden bg-gradient-to-b from-[#0A0F1C] via-[#0D1424] to-[#0A0F1C]"
+      className="relative py-24 px-6 overflow-hidden bg-linear-to-b from-[#0A0F1C] via-[#0D1424] to-[#0A0F1C]"
     >
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 -left-20 w-80 h-80 bg-blue-600/5 rounded-full blur-3xl" />
@@ -53,7 +53,7 @@ export default function About({ settings }: AboutProps) {
           <span className="text-xs font-mono tracking-widest text-purple-400 mb-4 block">INTRODUCTION</span>
           <h2 className="text-5xl md:text-6xl font-black text-white">
             About{' '}
-            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text animate-gradient">
+            <span className="bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text animate-gradient">
               Me
             </span>
           </h2>
@@ -68,7 +68,7 @@ export default function About({ settings }: AboutProps) {
             className="flex justify-center"
           >
             <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-3xl blur-2xl" />
+              <div className="absolute -inset-4 bg-linear-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-3xl blur-2xl" />
               <div className="relative w-72 h-72 lg:w-80 lg:h-80 rounded-3xl overflow-hidden border border-slate-800/50">
                 <Image
                   src={settings.aboutImage || '/atuljha.jpeg'}
@@ -84,7 +84,7 @@ export default function About({ settings }: AboutProps) {
                     key={stat.label}
                     className="bg-[#0D1424]/90 backdrop-blur-sm border border-slate-800/50 rounded-xl p-3 text-center"
                   >
-                    <div className={`text-lg font-bold bg-gradient-to-r ${stat.color} text-transparent bg-clip-text`}>
+                    <div className={`text-lg font-bold bg-linear-to-r ${stat.color} text-transparent bg-clip-text`}>
                       {stat.value}
                     </div>
                     <div className="text-[10px] text-slate-500 font-mono">{stat.label}</div>
@@ -112,19 +112,19 @@ export default function About({ settings }: AboutProps) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
               {settings.college && (
                 <div className="flex items-center gap-3 p-3 bg-[#0D1424]/50 rounded-xl border border-slate-800/50">
-                  <GraduationCap className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                  <GraduationCap className="w-4 h-4 text-purple-400 shrink-0" />
                   <span className="text-sm text-slate-300 truncate">{settings.college}</span>
                 </div>
               )}
               {settings.location && (
                 <div className="flex items-center gap-3 p-3 bg-[#0D1424]/50 rounded-xl border border-slate-800/50">
-                  <MapPin className="w-4 h-4 text-pink-400 flex-shrink-0" />
+                  <MapPin className="w-4 h-4 text-pink-400 shrink-0" />
                   <span className="text-sm text-slate-300">{settings.location}</span>
                 </div>
               )}
               {settings.email && (
                 <div className="flex items-center gap-3 p-3 bg-[#0D1424]/50 rounded-xl border border-slate-800/50">
-                  <Mail className="w-4 h-4 text-blue-400 flex-shrink-0" />
+                  <Mail className="w-4 h-4 text-blue-400 shrink-0" />
                   <span className="text-sm text-slate-300 truncate">{settings.email}</span>
                 </div>
               )}

@@ -18,11 +18,6 @@ export const projectSchema = z.object({
 
 export const hackathonCertificateSchema = z.object({
   title: z.string().min(1, 'Title is required').max(200),
-  organization: z.string().min(1, 'Organization is required').max(200),
-  position: z.string().min(1, 'Position/Rank is required').max(100),
-  date: z.string().min(1, 'Date is required'),
-  description: z.string().max(1000).optional().or(z.literal('')),
-  proofLink: z.string().url('Invalid URL').optional().or(z.literal('')),
   order: z.number().default(0),
 })
 
@@ -61,7 +56,6 @@ export const siteSettingsSchema = z.object({
 
 export type LoginInput = z.infer<typeof loginSchema>
 export type ProjectInput = z.infer<typeof projectSchema>
-export type HackathonCertificateInput = z.infer<typeof hackathonCertificateSchema>
-export type SkillCertificateInput = z.infer<typeof skillCertificateSchema>
+export type HackathonCertificateInput = z.infer<typeof hackathonCertificateSchema>export type SkillCertificateInput = z.infer<typeof skillCertificateSchema>
 export type SkillLearnedInput = z.infer<typeof skillLearnedSchema>
 export type SiteSettingsInput = z.infer<typeof siteSettingsSchema>

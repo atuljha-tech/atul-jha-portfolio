@@ -30,11 +30,6 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     const formData = await req.formData()
     const body = {
       title: formData.get('title') as string,
-      organization: formData.get('organization') as string,
-      position: formData.get('position') as string,
-      date: formData.get('date') as string,
-      description: (formData.get('description') as string) || '',
-      proofLink: (formData.get('proofLink') as string) || '',
       order: Number(formData.get('order') || 0),
     }
 
@@ -51,7 +46,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
 
     const cert = await HackathonCertificate.findByIdAndUpdate(
       id,
-      { ...parsed.data, date: new Date(parsed.data.date), image },
+      { ...parsed.data, image },
       { new: true }
     )
     return NextResponse.json({ certificate: cert })

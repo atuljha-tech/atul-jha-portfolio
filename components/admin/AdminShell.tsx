@@ -55,7 +55,7 @@ export default function AdminShell({ children, user }: AdminShellProps) {
       {/* Logo */}
       <div className="p-6 border-b border-white/5">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center">
+          <div className="w-9 h-9 rounded-xl bg-linear-to-br from-blue-500 to-purple-500 flex items-center justify-center">
             <LayoutDashboard className="w-4 h-4 text-white" />
           </div>
           <div>
@@ -76,12 +76,12 @@ export default function AdminShell({ children, user }: AdminShellProps) {
               onClick={() => setSidebarOpen(false)}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group ${
                 active
-                  ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-white border border-purple-500/20'
+                  ? 'bg-linear-to-r from-blue-500/20 to-purple-500/20 text-white border border-purple-500/20'
                   : 'text-slate-400 hover:text-white hover:bg-white/5'
               }`}
             >
               <item.icon
-                className={`w-4 h-4 flex-shrink-0 ${active ? 'text-purple-400' : 'text-slate-500 group-hover:text-slate-300'}`}
+                className={`w-4 h-4 shrink-0 ${active ? 'text-purple-400' : 'text-slate-500 group-hover:text-slate-300'}`}
               />
               {item.label}
               {active && <ChevronRight className="w-3 h-3 ml-auto text-purple-400" />}
@@ -115,7 +115,7 @@ export default function AdminShell({ children, user }: AdminShellProps) {
   return (
     <div className="min-h-screen bg-[#0A0F1C] flex">
       {/* Desktop sidebar */}
-      <aside className="hidden lg:flex flex-col w-64 admin-sidebar flex-shrink-0">
+      <aside className="hidden lg:flex flex-col w-64 admin-sidebar shrink-0">
         <Sidebar />
       </aside>
 
@@ -141,7 +141,7 @@ export default function AdminShell({ children, user }: AdminShellProps) {
       {/* Main content */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top bar */}
-        <header className="h-16 border-b border-white/5 flex items-center justify-between px-6 bg-[#0D1424]/50 backdrop-blur-sm flex-shrink-0">
+        <header className="h-16 border-b border-white/5 flex items-center justify-between px-6 bg-[#0D1424]/50 backdrop-blur-sm shrink-0">
           <button
             onClick={() => setSidebarOpen(true)}
             className="lg:hidden w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center"

@@ -41,7 +41,7 @@ export default function SkillCertList({ initialCerts }: { initialCerts: Cert[] }
         </div>
         <Link
           href="/admin/skill-certificates/new"
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-green-500 to-teal-500 text-white text-sm font-medium hover:opacity-90 transition-opacity"
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-linear-to-r from-green-500 to-teal-500 text-white text-sm font-medium hover:opacity-90 transition-opacity"
         >
           <Plus className="w-4 h-4" />
           Add Certificate
@@ -54,7 +54,7 @@ export default function SkillCertList({ initialCerts }: { initialCerts: Cert[] }
           <p className="text-slate-400 mb-4">No skill certificates yet</p>
           <Link
             href="/admin/skill-certificates/new"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-green-500 to-teal-500 text-white text-sm font-medium"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-linear-to-r from-green-500 to-teal-500 text-white text-sm font-medium"
           >
             <Plus className="w-4 h-4" />
             Add Your First Certificate
@@ -70,7 +70,7 @@ export default function SkillCertList({ initialCerts }: { initialCerts: Cert[] }
               {cert.image && (
                 <div className="relative h-32 overflow-hidden">
                   <img src={cert.image} alt={cert.name} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0D1424] to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-[#0D1424] to-transparent" />
                 </div>
               )}
               <div className="p-4">
@@ -98,7 +98,7 @@ export default function SkillCertList({ initialCerts }: { initialCerts: Cert[] }
                       )}
                     </div>
                   </div>
-                  <div className="flex items-center gap-1 flex-shrink-0">
+                  <div className="flex items-center gap-1 shrink-0">
                     <Link
                       href={`/admin/skill-certificates/${cert._id}/edit`}
                       className="p-1.5 rounded-lg text-slate-500 hover:text-blue-400 hover:bg-blue-500/10 transition-all"

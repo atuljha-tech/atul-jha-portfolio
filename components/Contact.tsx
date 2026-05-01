@@ -58,7 +58,7 @@ export default function Contact({ settings }: ContactProps) {
     <section
       ref={ref}
       id="contact"
-      className="relative py-24 px-6 overflow-hidden bg-gradient-to-b from-[#0A0F1C] via-[#0D1424] to-[#0A0F1C]"
+      className="relative py-24 px-6 overflow-hidden bg-linear-to-b from-[#0A0F1C] via-[#0D1424] to-[#0A0F1C]"
     >
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 -left-20 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl" />
@@ -76,7 +76,7 @@ export default function Contact({ settings }: ContactProps) {
           <span className="text-xs font-mono tracking-widest text-purple-400 mb-4 block">CONNECT</span>
           <h2 className="text-5xl md:text-6xl font-black text-white">
             Get in{' '}
-            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text animate-gradient">
+            <span className="bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text animate-gradient">
               Touch
             </span>
           </h2>
@@ -93,9 +93,9 @@ export default function Contact({ settings }: ContactProps) {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <div className="relative">
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-2xl blur" />
+              <div className="absolute -inset-0.5 bg-linear-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-2xl blur" />
               <div className="relative bg-[#0D1424] rounded-2xl border border-slate-800/50 p-8">
-                <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-t-2xl" />
+                <div className="absolute top-0 left-0 right-0 h-0.5 bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 rounded-t-2xl" />
                 <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
                   <Send className="w-5 h-5 text-purple-400" />
                   Send a Message
@@ -128,7 +128,7 @@ export default function Contact({ settings }: ContactProps) {
                   <button
                     type="submit"
                     disabled={sending || sent}
-                    className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium flex items-center justify-center gap-2 hover:opacity-90 transition-opacity disabled:opacity-60"
+                    className="w-full py-3 rounded-xl bg-linear-to-r from-blue-500 to-purple-500 text-white font-medium flex items-center justify-center gap-2 hover:opacity-90 transition-opacity disabled:opacity-60"
                   >
                     {sent ? (
                       <>
@@ -164,7 +164,7 @@ export default function Contact({ settings }: ContactProps) {
               <div className="bg-[#0D1424] rounded-2xl border border-slate-800/50 p-6">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-xl bg-linear-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
                       <Mail className="w-5 h-5 text-blue-400" />
                     </div>
                     <div>
@@ -191,7 +191,7 @@ export default function Contact({ settings }: ContactProps) {
             {settings.location && (
               <div className="bg-[#0D1424] rounded-2xl border border-slate-800/50 p-6">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-pink-500/20 to-purple-500/20 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-xl bg-linear-to-br from-pink-500/20 to-purple-500/20 flex items-center justify-center">
                     <MapPin className="w-5 h-5 text-pink-400" />
                   </div>
                   <div>

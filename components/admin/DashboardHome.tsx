@@ -75,11 +75,11 @@ export default function DashboardHome({ stats }: Props) {
             className="group relative bg-[#0D1424] rounded-2xl border border-slate-800/50 p-5 hover:border-transparent transition-all duration-300"
           >
             <div
-              className={`absolute inset-0 bg-gradient-to-br ${card.bg} rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+              className={`absolute inset-0 bg-linear-to-br ${card.bg} rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
             />
             <div className="relative">
               <div
-                className={`w-10 h-10 rounded-xl bg-gradient-to-br ${card.gradient} flex items-center justify-center mb-3`}
+                className={`w-10 h-10 rounded-xl bg-linear-to-br ${card.gradient} flex items-center justify-center mb-3`}
               >
                 <card.icon className="w-5 h-5 text-white" />
               </div>

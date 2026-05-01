@@ -175,7 +175,7 @@ export default function SettingsForm({ initialData }: Props) {
         <button
           type="submit"
           disabled={loading}
-          className="flex items-center gap-2 px-8 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium hover:opacity-90 transition-opacity disabled:opacity-60"
+          className="flex items-center gap-2 px-8 py-3 rounded-xl bg-linear-to-r from-blue-500 to-purple-500 text-white font-medium hover:opacity-90 transition-opacity disabled:opacity-60"
         >
           {loading ? (
             <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full spinner" />

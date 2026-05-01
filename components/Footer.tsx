@@ -28,13 +28,13 @@ export default function Footer({ settings }: FooterProps) {
   ].filter(Boolean) as { icon: React.ElementType; href: string; label: string }[]
 
   return (
-    <footer className="relative bg-gradient-to-b from-[#0A0F1C] to-[#05080F] py-12 overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/30 to-transparent" />
+    <footer className="relative bg-linear-to-b from-[#0A0F1C] to-[#05080F] py-12 overflow-hidden">
+      <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-purple-500/30 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col items-center text-center">
           <span
-            className="text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text mb-6"
+            className="text-2xl font-bold bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text mb-6"
             style={{ fontFamily: 'var(--font-dancing), cursive' }}
           >
             {settings.heroName || 'Atul Jha'}

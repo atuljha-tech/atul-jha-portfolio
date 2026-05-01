@@ -66,9 +66,9 @@ export default function Navbar({ settings }: NavbarProps) {
               onClick={() => scrollTo('home')}
               className="group relative"
             >
-              <div className="absolute -inset-2 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-full opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500" />
+              <div className="absolute -inset-2 bg-linear-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-full opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500" />
               <span
-                className="relative text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text animate-gradient"
+                className="relative text-2xl font-bold bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text animate-gradient"
                 style={{ fontFamily: 'var(--font-dancing), cursive' }}
               >
                 {settings.heroName || 'Atul Jha'}
@@ -103,7 +103,7 @@ export default function Navbar({ settings }: NavbarProps) {
                   href={settings.resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="ml-2 px-4 py-2 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm font-medium flex items-center gap-2 hover:opacity-90 transition-opacity"
+                  className="ml-2 px-4 py-2 rounded-xl bg-linear-to-r from-blue-500 to-purple-500 text-white text-sm font-medium flex items-center gap-2 hover:opacity-90 transition-opacity"
                 >
                   <FileText className="w-3.5 h-3.5" />
                   Resume
@@ -144,7 +144,7 @@ export default function Navbar({ settings }: NavbarProps) {
                   href={settings.resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm font-medium mt-2"
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-linear-to-r from-blue-500 to-purple-500 text-white text-sm font-medium mt-2"
                 >
                   <FileText className="w-4 h-4" />
                   Resume

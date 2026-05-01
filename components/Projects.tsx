@@ -44,7 +44,7 @@ export default function Projects({ projects }: Props) {
     <section
       ref={ref}
       id="projects"
-      className="relative py-24 px-6 overflow-hidden bg-gradient-to-b from-[#0A0F1C] via-[#0D1424] to-[#0A0F1C]"
+      className="relative py-24 px-6 overflow-hidden bg-linear-to-b from-[#0A0F1C] via-[#0D1424] to-[#0A0F1C]"
     >
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 -left-20 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl" />
@@ -62,7 +62,7 @@ export default function Projects({ projects }: Props) {
           <span className="text-xs font-mono tracking-widest text-purple-400 mb-4 block">PORTFOLIO</span>
           <h2 className="text-5xl md:text-6xl font-black text-white mb-4">
             My{' '}
-            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text animate-gradient">
+            <span className="bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text animate-gradient">
               Projects
             </span>
           </h2>
@@ -85,7 +85,7 @@ export default function Projects({ projects }: Props) {
                 onClick={() => setFilter(cat)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                   filter === cat
-                    ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
+                    ? 'bg-linear-to-r from-blue-500 to-purple-500 text-white'
                     : 'bg-[#0D1424] border border-slate-800 text-slate-400 hover:text-white hover:border-purple-500/50'
                 }`}
               >
@@ -105,11 +105,11 @@ export default function Projects({ projects }: Props) {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="group relative"
             >
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500/30 via-purple-500/30 to-pink-500/30 rounded-2xl opacity-0 group-hover:opacity-100 blur transition-opacity duration-500" />
+              <div className="absolute -inset-0.5 bg-linear-to-r from-blue-500/30 via-purple-500/30 to-pink-500/30 rounded-2xl opacity-0 group-hover:opacity-100 blur transition-opacity duration-500" />
               <div className="relative bg-[#0D1424] rounded-2xl border border-slate-800/50 overflow-hidden hover:border-transparent transition-all duration-300 h-full flex flex-col">
                 {/* Image */}
                 {project.image ? (
-                  <div className="relative h-44 overflow-hidden flex-shrink-0">
+                  <div className="relative h-44 overflow-hidden shrink-0">
                     <img
                       src={project.image}
                       alt={project.name}
@@ -117,7 +117,7 @@ export default function Projects({ projects }: Props) {
                       decoding="async"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0D1424] via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-linear-to-t from-[#0D1424] via-transparent to-transparent" />
                     {project.featured && (
                       <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 bg-yellow-500/20 border border-yellow-500/30 rounded-full">
                         <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
@@ -126,7 +126,7 @@ export default function Projects({ projects }: Props) {
                     )}
                   </div>
                 ) : (
-                  <div className="h-32 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 flex items-center justify-center flex-shrink-0">
+                  <div className="h-32 bg-linear-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 flex items-center justify-center shrink-0">
                     <div className="text-4xl">🚀</div>
                     {project.featured && (
                       <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 bg-yellow-500/20 border border-yellow-500/30 rounded-full">
@@ -142,7 +142,7 @@ export default function Projects({ projects }: Props) {
                   <div className="flex items-center gap-2 mb-3">
                     <Tag className="w-3 h-3 text-slate-500" />
                     <span
-                      className={`text-xs font-medium bg-gradient-to-r ${
+                      className={`text-xs font-medium bg-linear-to-r ${
                         categoryColors[project.category] || categoryColors.Other
                       } text-transparent bg-clip-text`}
                     >

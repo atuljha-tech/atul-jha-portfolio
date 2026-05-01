@@ -8,7 +8,7 @@ import { uploadFile } from '@/lib/upload'
 export async function GET() {
   try {
     await connectDB()
-    const certs = await HackathonCertificate.find().sort({ order: 1, date: -1 })
+    const certs = await HackathonCertificate.find().sort({ order: 1, createdAt: -1 })
     return NextResponse.json({ certificates: certs })
   } catch {
     return NextResponse.json({ error: 'Failed to fetch certificates' }, { status: 500 })
@@ -25,11 +25,6 @@ export async function POST(req: NextRequest) {
 
     const body = {
       title: formData.get('title') as string,
-      organization: formData.get('organization') as string,
-      position: formData.get('position') as string,
-      date: formData.get('date') as string,
-      description: (formData.get('description') as string) || '',
-      proofLink: (formData.get('proofLink') as string) || '',
       order: Number(formData.get('order') || 0),
     }
 
@@ -44,11 +39,7 @@ export async function POST(req: NextRequest) {
       image = await uploadFile(imageFile)
     }
 
-    const cert = await HackathonCertificate.create({
-      ...parsed.data,
-      date: new Date(parsed.data.date),
-      image,
-    })
+    const cert = await HackathonCertificate.create({ ...parsed.data, image })
     return NextResponse.json({ certificate: cert }, { status: 201 })
   } catch (error) {
     console.error('Create hackathon cert error:', error)

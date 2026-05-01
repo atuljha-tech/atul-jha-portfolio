@@ -42,7 +42,7 @@ export default function ProjectList({ initialProjects }: { initialProjects: Proj
         </div>
         <Link
           href="/admin/projects/new"
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm font-medium hover:opacity-90 transition-opacity"
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-linear-to-r from-blue-500 to-purple-500 text-white text-sm font-medium hover:opacity-90 transition-opacity"
         >
           <Plus className="w-4 h-4" />
           Add Project
@@ -55,7 +55,7 @@ export default function ProjectList({ initialProjects }: { initialProjects: Proj
           <p className="text-slate-400 mb-4">No projects yet</p>
           <Link
             href="/admin/projects/new"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm font-medium"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-linear-to-r from-blue-500 to-purple-500 text-white text-sm font-medium"
           >
             <Plus className="w-4 h-4" />
             Add Your First Project
@@ -70,7 +70,7 @@ export default function ProjectList({ initialProjects }: { initialProjects: Proj
             >
               <div className="flex items-start gap-4">
                 {project.image && (
-                  <div className="relative w-16 h-16 rounded-xl overflow-hidden flex-shrink-0">
+                  <div className="relative w-16 h-16 rounded-xl overflow-hidden shrink-0">
                     <img src={project.image} alt={project.name} className="w-full h-full object-cover" />
                   </div>
                 )}
@@ -80,7 +80,7 @@ export default function ProjectList({ initialProjects }: { initialProjects: Proj
                       <div className="flex items-center gap-2 mb-1">
                         <h3 className="text-white font-semibold truncate">{project.name}</h3>
                         {project.featured && (
-                          <Star className="w-3.5 h-3.5 text-yellow-400 fill-yellow-400 flex-shrink-0" />
+                          <Star className="w-3.5 h-3.5 text-yellow-400 fill-yellow-400 shrink-0" />
                         )}
                       </div>
                       <div className="flex items-center gap-2 mb-2">
@@ -104,7 +104,7 @@ export default function ProjectList({ initialProjects }: { initialProjects: Proj
                         )}
                       </div>
                     </div>
-                    <div className="flex items-center gap-1 flex-shrink-0">
+                    <div className="flex items-center gap-1 shrink-0">
                       <Link
                         href={`/admin/projects/${project._id}/edit`}
                         className="p-1.5 rounded-lg text-slate-500 hover:text-blue-400 hover:bg-blue-500/10 transition-all"

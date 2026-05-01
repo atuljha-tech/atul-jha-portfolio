@@ -42,7 +42,7 @@ export default function Hero({ settings }: HeroProps) {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center px-6 py-28 overflow-hidden bg-gradient-to-b from-[#0A0F1C] via-[#0D1424] to-[#0A0F1C]"
+      className="relative min-h-screen flex items-center justify-center px-6 py-28 overflow-hidden bg-linear-to-b from-[#0A0F1C] via-[#0D1424] to-[#0A0F1C]"
     >
       {/* Background orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -67,10 +67,10 @@ export default function Hero({ settings }: HeroProps) {
           className="flex justify-center mb-12"
         >
           <div className="relative group">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full opacity-60 blur transition duration-500 group-hover:opacity-100" />
+            <div className="absolute -inset-0.5 bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full opacity-60 blur transition duration-500 group-hover:opacity-100" />
             <div className="relative px-6 py-2.5 bg-[#0D1424] rounded-full border border-slate-800 flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-purple-400" />
-              <span className="text-sm font-medium bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text">
+              <span className="text-sm font-medium bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text">
                 Passionate CS Student
               </span>
             </div>
@@ -85,23 +85,23 @@ export default function Hero({ settings }: HeroProps) {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <p className="text-slate-400 text-lg mb-2 flex items-center gap-2">
-              <span className="w-8 h-px bg-gradient-to-r from-blue-400 to-purple-400" />
+              <span className="w-8 h-px bg-linear-to-r from-blue-400 to-purple-400" />
               Hi, I'm
             </p>
 
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-black mb-4">
-              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text animate-gradient">
+              <span className="bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text animate-gradient">
                 {name}
               </span>
             </h1>
 
             <div className="flex items-center gap-3 mb-6">
-              <Code2 className="w-5 h-5 text-purple-400 flex-shrink-0" />
+              <Code2 className="w-5 h-5 text-purple-400 shrink-0" />
               <span className="text-xl text-slate-300 font-light">{title}</span>
               <motion.div
                 animate={{ opacity: [1, 0] }}
                 transition={{ duration: 1, repeat: Infinity, repeatType: 'reverse' }}
-                className="w-0.5 h-6 bg-gradient-to-b from-blue-400 to-purple-400"
+                className="w-0.5 h-6 bg-linear-to-b from-blue-400 to-purple-400"
               />
             </div>
 
@@ -158,7 +158,7 @@ export default function Hero({ settings }: HeroProps) {
                 transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
                 className="absolute inset-4 rounded-full border-2 border-dashed border-pink-500/20"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-full blur-3xl animate-pulse" />
+              <div className="absolute inset-0 bg-linear-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-full blur-3xl animate-pulse" />
               <div className="absolute inset-8 rounded-full overflow-hidden border-4 border-slate-800/50 shadow-2xl">
                 <Image
                   src={settings.aboutImage || '/atuljha.jpeg'}
@@ -175,7 +175,7 @@ export default function Hero({ settings }: HeroProps) {
               >
                 <span className="text-xs font-medium flex items-center gap-1.5">
                   <Rocket className="w-3 h-3 text-purple-400" />
-                  <span className="bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">
+                  <span className="bg-linear-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">
                     Learning
                   </span>
                 </span>
@@ -201,7 +201,7 @@ export default function Hero({ settings }: HeroProps) {
             <motion.div
               animate={{ height: [6, 18, 6] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="w-1.5 bg-gradient-to-b from-blue-400 to-purple-400 rounded-full"
+              className="w-1.5 bg-linear-to-b from-blue-400 to-purple-400 rounded-full"
             />
           </motion.button>
         </motion.div>

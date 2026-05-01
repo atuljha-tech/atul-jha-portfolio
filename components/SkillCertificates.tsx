@@ -38,7 +38,7 @@ export default function SkillCertificates({ certificates }: Props) {
     <section
       ref={ref}
       id="skill-certs"
-      className="relative py-24 px-6 overflow-hidden bg-gradient-to-b from-[#0A0F1C] via-[#0D1424] to-[#0A0F1C]"
+      className="relative py-24 px-6 overflow-hidden bg-linear-to-b from-[#0A0F1C] via-[#0D1424] to-[#0A0F1C]"
     >
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 -left-20 w-80 h-80 bg-green-600/5 rounded-full blur-3xl" />
@@ -56,7 +56,7 @@ export default function SkillCertificates({ certificates }: Props) {
           <span className="text-xs font-mono tracking-widest text-green-400 mb-4 block">LEARNING</span>
           <h2 className="text-5xl md:text-6xl font-black text-white">
             Skills{' '}
-            <span className="bg-gradient-to-r from-green-400 via-teal-400 to-blue-400 text-transparent bg-clip-text">
+            <span className="bg-linear-to-r from-green-400 via-teal-400 to-blue-400 text-transparent bg-clip-text">
               Certificates
             </span>
           </h2>
@@ -76,7 +76,7 @@ export default function SkillCertificates({ certificates }: Props) {
               onClick={() => cert.image && setSelected(index)}
               className={`group relative ${cert.image ? 'cursor-pointer' : ''}`}
             >
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-green-500/30 via-teal-500/30 to-blue-500/30 rounded-2xl opacity-0 group-hover:opacity-100 blur transition-opacity duration-500" />
+              <div className="absolute -inset-0.5 bg-linear-to-r from-green-500/30 via-teal-500/30 to-blue-500/30 rounded-2xl opacity-0 group-hover:opacity-100 blur transition-opacity duration-500" />
               <div className="relative bg-[#0D1424] rounded-2xl border border-slate-800/50 overflow-hidden hover:border-transparent transition-all duration-300">
                 {cert.image && !cert.image.startsWith('data:application/pdf') ? (
                   <div className="relative aspect-[4/3] overflow-hidden">
@@ -87,7 +87,7 @@ export default function SkillCertificates({ certificates }: Props) {
                       decoding="async"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0D1424] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-linear-to-t from-[#0D1424] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <span className="px-3 py-1.5 bg-white/10 backdrop-blur-sm rounded-full text-xs text-white border border-white/20">
                         View
@@ -95,7 +95,7 @@ export default function SkillCertificates({ certificates }: Props) {
                     </div>
                   </div>
                 ) : (
-                  <div className="aspect-[4/3] bg-gradient-to-br from-green-500/10 via-teal-500/10 to-blue-500/10 flex items-center justify-center">
+                  <div className="aspect-[4/3] bg-linear-to-br from-green-500/10 via-teal-500/10 to-blue-500/10 flex items-center justify-center">
                     <Award className="w-10 h-10 text-green-400/40" />
                   </div>
                 )}

@@ -52,7 +52,7 @@ export default function Skills({ skills }: Props) {
     <section
       ref={ref}
       id="skills"
-      className="relative py-24 px-6 overflow-hidden bg-gradient-to-b from-[#0A0F1C] via-[#0D1424] to-[#0A0F1C]"
+      className="relative py-24 px-6 overflow-hidden bg-linear-to-b from-[#0A0F1C] via-[#0D1424] to-[#0A0F1C]"
     >
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 -left-20 w-80 h-80 bg-purple-600/8 rounded-full blur-3xl" />
@@ -70,7 +70,7 @@ export default function Skills({ skills }: Props) {
           <span className="text-xs font-mono tracking-widest text-purple-400 mb-4 block">EXPERTISE</span>
           <h2 className="text-5xl md:text-6xl font-black text-white">
             Skills{' '}
-            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text animate-gradient">
+            <span className="bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text animate-gradient">
               Learned
             </span>
           </h2>
@@ -90,13 +90,13 @@ export default function Skills({ skills }: Props) {
               className="group relative"
             >
               <div
-                className={`absolute -inset-0.5 bg-gradient-to-r ${categoryColors[category] || categoryColors.Other} rounded-2xl opacity-0 group-hover:opacity-20 blur transition-opacity duration-500`}
+                className={`absolute -inset-0.5 bg-linear-to-r ${categoryColors[category] || categoryColors.Other} rounded-2xl opacity-0 group-hover:opacity-20 blur transition-opacity duration-500`}
               />
               <div className="relative bg-[#0D1424] rounded-2xl border border-slate-800/50 p-5 hover:border-transparent transition-all duration-300">
                 {/* Category header */}
                 <div className="flex items-center gap-3 mb-5">
                   <div
-                    className={`w-10 h-10 rounded-xl bg-gradient-to-br ${categoryBg[category] || categoryBg.Other} flex items-center justify-center`}
+                    className={`w-10 h-10 rounded-xl bg-linear-to-br ${categoryBg[category] || categoryBg.Other} flex items-center justify-center`}
                   >
                     <span className="text-xl">
                       {category === 'Frontend'
@@ -130,7 +130,7 @@ export default function Skills({ skills }: Props) {
                           <span className="text-sm text-slate-300 font-medium">{skill.name}</span>
                         </div>
                         <span
-                          className={`text-xs font-mono bg-gradient-to-r ${
+                          className={`text-xs font-mono bg-linear-to-r ${
                             categoryColors[category] || categoryColors.Other
                           } text-transparent bg-clip-text`}
                         >
@@ -142,7 +142,7 @@ export default function Skills({ skills }: Props) {
                           initial={{ width: 0 }}
                           animate={inView ? { width: `${skill.proficiency}%` } : { width: 0 }}
                           transition={{ duration: 1, delay: catIndex * 0.1 + skillIndex * 0.05 + 0.3 }}
-                          className={`h-full bg-gradient-to-r ${
+                          className={`h-full bg-linear-to-r ${
                             categoryColors[category] || categoryColors.Other
                           } rounded-full`}
                         />
