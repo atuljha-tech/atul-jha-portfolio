@@ -56,6 +56,7 @@ export const siteSettingsSchema = z.object({
 
 export type LoginInput = z.infer<typeof loginSchema>
 export type ProjectInput = z.infer<typeof projectSchema>
-export type HackathonCertificateInput = z.infer<typeof hackathonCertificateSchema>export type SkillCertificateInput = z.infer<typeof skillCertificateSchema>
+export type HackathonCertificateInput = z.infer<typeof hackathonCertificateSchema>
+export type SkillCertificateInput = z.infer<typeof skillCertificateSchema>
 export type SkillLearnedInput = z.infer<typeof skillLearnedSchema>
 export type SiteSettingsInput = z.infer<typeof siteSettingsSchema>
