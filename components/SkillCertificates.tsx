@@ -66,7 +66,7 @@ export default function SkillCertificates({ certificates }: Props) {
         </motion.div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {certificates.map((cert, index) => (
             <motion.div
               key={cert._id}
@@ -79,7 +79,7 @@ export default function SkillCertificates({ certificates }: Props) {
               <div className="absolute -inset-0.5 bg-linear-to-r from-green-500/30 via-teal-500/30 to-blue-500/30 rounded-2xl opacity-0 group-hover:opacity-100 blur transition-opacity duration-500" />
               <div className="relative bg-[#0D1424] rounded-2xl border border-slate-800/50 overflow-hidden hover:border-transparent transition-all duration-300">
                 {cert.image && !cert.image.startsWith('data:application/pdf') ? (
-                  <div className="relative aspect-[4/3] overflow-hidden">
+                  <div className="relative aspect-[3/2] overflow-hidden">
                     <img
                       src={cert.image}
                       alt={cert.name}

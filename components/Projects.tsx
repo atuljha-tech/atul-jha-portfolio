@@ -114,7 +114,7 @@ export default function Projects({ projects }: Props) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
+            className="grid grid-cols-1 md:grid-cols-2 gap-6"
           >
             {filtered.map((project, i) => {
               const accent = catAccent[project.category] || catAccent.Other
@@ -127,7 +127,7 @@ export default function Projects({ projects }: Props) {
                   className="group relative flex flex-col rounded-2xl border border-white/6 bg-[#0D1424] overflow-hidden hover:border-white/12 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-violet-500/8"
                 >
                   {/* Image */}
-                  <div className="relative h-44 overflow-hidden shrink-0 bg-[#111827]">
+                  <div className="relative h-56 overflow-hidden shrink-0 bg-[#111827]">
                     {project.image ? (
                       <img
                         src={project.image}
