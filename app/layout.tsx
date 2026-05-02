@@ -1,13 +1,21 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter, Dancing_Script } from 'next/font/google'
+import { Inter, Space_Grotesk, Dancing_Script } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
 
-// Load fonts via next/font — zero layout shift, self-hosted, no external request
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
+  fallback: ['system-ui', '-apple-system', 'sans-serif'],
+})
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-heading',
+  display: 'swap',
+  weight: ['400', '500', '600', '700'],
+  fallback: ['system-ui', 'sans-serif'],
 })
 
 const dancingScript = Dancing_Script({
@@ -17,7 +25,7 @@ const dancingScript = Dancing_Script({
   display: 'swap',
 })
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://atuljhaportfoliosite.vercel.app'
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://atul-jha-portfolio.vercel.app'
 
 export const metadata: Metadata = {
   metadataBase: new URL(APP_URL),
@@ -50,20 +58,21 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${dancingScript.variable}`}>
-      <body className="bg-[#0A0F1C] text-slate-200 antialiased selection:bg-purple-600 selection:text-white">
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${dancingScript.variable}`}>
+      <body className="bg-[#080C18] text-slate-200 antialiased selection:bg-violet-600/40 selection:text-white">
         {children}
         <Toaster
-          position="top-right"
+          position="bottom-right"
           toastOptions={{
             style: {
               background: '#0D1424',
               color: '#e2e8f0',
-              border: '1px solid rgba(139, 92, 246, 0.3)',
-              borderRadius: '0.75rem',
+              border: '1px solid rgba(139, 92, 246, 0.25)',
+              borderRadius: '0.875rem',
+              fontSize: '0.875rem',
             },
             success: { iconTheme: { primary: '#8b5cf6', secondary: '#0D1424' } },
-            error: { iconTheme: { primary: '#ef4444', secondary: '#0D1424' } },
+            error:   { iconTheme: { primary: '#ef4444', secondary: '#0D1424' } },
           }}
         />
       </body>

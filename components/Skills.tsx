@@ -3,156 +3,135 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
 
-interface Skill {
-  _id: string
-  name: string
-  category: string
-  proficiency: number
-  icon?: string
+interface Skill { _id: string; name: string; category: string; proficiency: number; icon?: string }
+interface Props { skills: Skill[] }
+
+const catStyle: Record<string, { bar: string; badge: string; icon: string }> = {
+  Frontend:    { bar: 'from-blue-500 to-cyan-400',    badge: 'bg-blue-500/10 text-blue-300 border-blue-500/20',    icon: '⚛️' },
+  Backend:     { bar: 'from-violet-500 to-purple-400', badge: 'bg-violet-500/10 text-violet-300 border-violet-500/20', icon: '🔧' },
+  Database:    { bar: 'from-emerald-500 to-teal-400', badge: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/20', icon: '🗄️' },
+  Blockchain:  { bar: 'from-orange-500 to-amber-400', badge: 'bg-orange-500/10 text-orange-300 border-orange-500/20', icon: '🔗' },
+  DevOps:      { bar: 'from-red-500 to-rose-400',     badge: 'bg-red-500/10 text-red-300 border-red-500/20',       icon: '🚀' },
+  Tools:       { bar: 'from-slate-500 to-slate-400',  badge: 'bg-slate-500/10 text-slate-300 border-slate-500/20', icon: '🛠️' },
+  Other:       { bar: 'from-pink-500 to-rose-400',    badge: 'bg-pink-500/10 text-pink-300 border-pink-500/20',    icon: '💡' },
 }
 
-interface Props {
-  skills: Skill[]
-}
-
-const categoryColors: Record<string, string> = {
-  Frontend: 'from-blue-400 to-cyan-400',
-  Backend: 'from-purple-400 to-pink-400',
-  Database: 'from-green-400 to-emerald-400',
-  Blockchain: 'from-orange-400 to-yellow-400',
-  DevOps: 'from-red-400 to-orange-400',
-  Tools: 'from-slate-400 to-slate-300',
-  Other: 'from-pink-400 to-rose-400',
-}
-
-const categoryBg: Record<string, string> = {
-  Frontend: 'from-blue-500/10 to-cyan-500/10',
-  Backend: 'from-purple-500/10 to-pink-500/10',
-  Database: 'from-green-500/10 to-emerald-500/10',
-  Blockchain: 'from-orange-500/10 to-yellow-500/10',
-  DevOps: 'from-red-500/10 to-orange-500/10',
-  Tools: 'from-slate-500/10 to-slate-400/10',
-  Other: 'from-pink-500/10 to-rose-500/10',
+// Skeleton
+function SkillsSkeleton() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      {[1,2,3,4,5,6].map(i => (
+        <div key={i} className="rounded-2xl border border-white/5 bg-[#0D1424] p-5 space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="skeleton w-10 h-10 rounded-xl" />
+            <div className="space-y-2">
+              <div className="skeleton h-4 w-20" />
+              <div className="skeleton h-3 w-12" />
+            </div>
+          </div>
+          {[1,2,3].map(j => (
+            <div key={j} className="space-y-1.5">
+              <div className="flex justify-between">
+                <div className="skeleton h-3 w-20" />
+                <div className="skeleton h-3 w-8" />
+              </div>
+              <div className="skeleton h-1.5 w-full rounded-full" />
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  )
 }
 
 export default function Skills({ skills }: Props) {
   const ref = useRef(null)
-  const inView = useInView(ref, { once: true, amount: 0.1 })
+  const inView = useInView(ref, { once: true, amount: 0.05 })
 
   if (skills.length === 0) return null
 
-  // Group by category
-  const grouped = skills.reduce<Record<string, Skill[]>>((acc, skill) => {
-    if (!acc[skill.category]) acc[skill.category] = []
-    acc[skill.category].push(skill)
+  const grouped = skills.reduce<Record<string, Skill[]>>((acc, s) => {
+    if (!acc[s.category]) acc[s.category] = []
+    acc[s.category].push(s)
     return acc
   }, {})
 
   return (
-    <section
-      ref={ref}
-      id="skills"
-      className="relative py-24 px-6 overflow-hidden bg-linear-to-b from-[#0A0F1C] via-[#0D1424] to-[#0A0F1C]"
-    >
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 -left-20 w-80 h-80 bg-purple-600/8 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 -right-20 w-80 h-80 bg-blue-600/8 rounded-full blur-3xl" />
-      </div>
+    <section ref={ref} id="skills" className="section-base">
+      <div className="glow-orb w-80 h-80 bg-violet-600/8 top-0 -right-20 pointer-events-none" />
+      <div className="glow-orb w-72 h-72 bg-blue-600/8 bottom-0 -left-20 pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.5 }}
+          className="text-center mb-14"
         >
-          <span className="text-xs font-mono tracking-widest text-purple-400 mb-4 block">EXPERTISE</span>
-          <h2 className="text-5xl md:text-6xl font-black text-white">
+          <span className="section-label">Expertise</span>
+          <h2 className="section-heading mb-4" style={{ fontFamily: 'var(--font-heading)' }}>
             Skills{' '}
-            <span className="bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text animate-gradient">
+            <span className="bg-linear-to-r from-blue-400 via-violet-400 to-pink-400 text-transparent bg-clip-text animate-gradient">
               Learned
             </span>
           </h2>
-          <p className="text-slate-400 mt-4 max-w-xl mx-auto">
-            Technologies and tools I've worked with
-          </p>
+          <p className="text-slate-500 max-w-md mx-auto text-sm">Technologies and tools I work with</p>
         </motion.div>
 
-        {/* Category groups */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {Object.entries(grouped).map(([category, categorySkills], catIndex) => (
-            <motion.div
-              key={category}
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: catIndex * 0.1 }}
-              className="group relative"
-            >
-              <div
-                className={`absolute -inset-0.5 bg-linear-to-r ${categoryColors[category] || categoryColors.Other} rounded-2xl opacity-0 group-hover:opacity-20 blur transition-opacity duration-500`}
-              />
-              <div className="relative bg-[#0D1424] rounded-2xl border border-slate-800/50 p-5 hover:border-transparent transition-all duration-300">
+        {/* Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {Object.entries(grouped).map(([cat, catSkills], ci) => {
+            const style = catStyle[cat] || catStyle.Other
+            return (
+              <motion.div
+                key={cat}
+                initial={{ opacity: 0, y: 24 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.45, delay: ci * 0.08 }}
+                className="group relative rounded-2xl border border-white/6 bg-[#0D1424] p-5 hover:border-white/12 transition-all duration-300 hover:-translate-y-0.5"
+              >
+                {/* Hover glow */}
+                <div className={`absolute inset-0 rounded-2xl bg-linear-to-br ${style.bar} opacity-0 group-hover:opacity-[0.04] transition-opacity duration-500`} />
+
                 {/* Category header */}
                 <div className="flex items-center gap-3 mb-5">
-                  <div
-                    className={`w-10 h-10 rounded-xl bg-linear-to-br ${categoryBg[category] || categoryBg.Other} flex items-center justify-center`}
-                  >
-                    <span className="text-xl">
-                      {category === 'Frontend'
-                        ? '⚛️'
-                        : category === 'Backend'
-                        ? '🔧'
-                        : category === 'Database'
-                        ? '🗄️'
-                        : category === 'Blockchain'
-                        ? '🔗'
-                        : category === 'DevOps'
-                        ? '🚀'
-                        : category === 'Tools'
-                        ? '🛠️'
-                        : '💡'}
-                    </span>
+                  <div className="w-10 h-10 rounded-xl bg-white/4 border border-white/6 flex items-center justify-center text-lg">
+                    {style.icon}
                   </div>
                   <div>
-                    <h3 className="text-white font-bold">{category}</h3>
-                    <p className="text-xs text-slate-500 font-mono">{categorySkills.length} SKILLS</p>
+                    <h3 className="text-white font-bold text-sm" style={{ fontFamily: 'var(--font-heading)' }}>{cat}</h3>
+                    <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${style.badge}`}>
+                      {catSkills.length} skills
+                    </span>
                   </div>
                 </div>
 
-                {/* Skills list */}
-                <div className="space-y-3">
-                  {categorySkills.map((skill, skillIndex) => (
+                {/* Skills */}
+                <div className="space-y-3.5">
+                  {catSkills.map((skill, si) => (
                     <div key={skill._id}>
                       <div className="flex items-center justify-between mb-1.5">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1.5">
                           {skill.icon && <span className="text-sm">{skill.icon}</span>}
                           <span className="text-sm text-slate-300 font-medium">{skill.name}</span>
                         </div>
-                        <span
-                          className={`text-xs font-mono bg-linear-to-r ${
-                            categoryColors[category] || categoryColors.Other
-                          } text-transparent bg-clip-text`}
-                        >
-                          {skill.proficiency}%
-                        </span>
+                        <span className="text-[11px] font-mono text-slate-500">{skill.proficiency}%</span>
                       </div>
-                      <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                      <div className="h-1 bg-white/5 rounded-full overflow-hidden">
                         <motion.div
                           initial={{ width: 0 }}
                           animate={inView ? { width: `${skill.proficiency}%` } : { width: 0 }}
-                          transition={{ duration: 1, delay: catIndex * 0.1 + skillIndex * 0.05 + 0.3 }}
-                          className={`h-full bg-linear-to-r ${
-                            categoryColors[category] || categoryColors.Other
-                          } rounded-full`}
+                          transition={{ duration: 1.1, delay: ci * 0.08 + si * 0.04 + 0.3, ease: 'easeOut' }}
+                          className={`h-full bg-linear-to-r ${style.bar} rounded-full`}
                         />
                       </div>
                     </div>
                   ))}
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            )
+          })}
         </div>
       </div>
     </section>
