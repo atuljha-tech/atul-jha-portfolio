@@ -1,6 +1,6 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter, Space_Grotesk, Dancing_Script } from 'next/font/google'
+import { Inter, Dancing_Script } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
 
 const inter = Inter({
@@ -8,14 +8,6 @@ const inter = Inter({
   variable: '--font-inter',
   display: 'swap',
   fallback: ['system-ui', '-apple-system', 'sans-serif'],
-})
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-heading',
-  display: 'swap',
-  weight: ['400', '500', '600', '700'],
-  fallback: ['system-ui', 'sans-serif'],
 })
 
 const dancingScript = Dancing_Script({
@@ -58,7 +50,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${dancingScript.variable}`}>
+    <html lang="en" className={`${inter.variable} ${dancingScript.variable}`}>
       <body className="bg-[#080C18] text-slate-200 antialiased selection:bg-violet-600/40 selection:text-white">
         {children}
         <Toaster

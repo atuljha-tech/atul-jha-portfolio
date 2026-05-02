@@ -8,6 +8,7 @@ interface Certificate {
   _id: string
   title: string
   image?: string
+  hasImage?: boolean
 }
 
 interface Props {
@@ -69,16 +70,16 @@ export default function HackathonCertificates({ certificates }: Props) {
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.08 }}
-              onClick={() => cert.image && setSelected(index)}
-              className={`group relative ${cert.image ? 'cursor-pointer' : ''}`}
+              onClick={() => (cert.image || cert.hasImage) && setSelected(index)}
+              className={`group relative ${(cert.image || cert.hasImage) ? 'cursor-pointer' : ''}`}
             >
               <div className="absolute -inset-0.5 bg-linear-to-r from-yellow-500/30 via-orange-500/30 to-pink-500/30 rounded-2xl opacity-0 group-hover:opacity-100 blur transition-opacity duration-500" />
               <div className="relative bg-[#0D1424] rounded-2xl border border-slate-800/50 overflow-hidden hover:border-transparent transition-all duration-300">
                 {/* Image */}
-                {cert.image ? (
+                {(cert.image || cert.hasImage) ? (
                   <div className="relative aspect-[4/3] overflow-hidden">
                     <img
-                      src={cert.image}
+                      src={cert.image || `/api/image/hackathons/${cert._id}`}
                       alt={cert.title}
                       loading="lazy"
                       decoding="async"
@@ -110,15 +111,13 @@ export default function HackathonCertificates({ certificates }: Props) {
       </div>
 
       {/* Lightbox */}
-      {selected !== null && certificates[selected]?.image && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl"
-          onClick={() => setSelected(null)}
-        >
+      {selected !== null && (certificates[selected]?.image || certificates[selected]?.hasImage) && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl"
+          onClick={() => setSelected(null)}>
           <div className="relative max-w-4xl w-full" onClick={(e) => e.stopPropagation()}>
             <div className="relative rounded-2xl overflow-hidden border border-slate-800/50 bg-[#0D1424]">
               <img
-                src={certificates[selected].image!}
+                src={certificates[selected].image || `/api/image/hackathons/${certificates[selected]._id}`}
                 alt={certificates[selected].title}
                 className="w-full max-h-[80vh] object-contain"
               />

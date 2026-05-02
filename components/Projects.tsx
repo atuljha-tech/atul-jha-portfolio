@@ -12,6 +12,7 @@ interface Project {
   githubLink?: string
   liveLink?: string
   image?: string
+  hasImage?: boolean
   category: string
   featured: boolean
 }
@@ -128,9 +129,9 @@ export default function Projects({ projects }: Props) {
                 >
                   {/* Image */}
                   <div className="relative h-56 overflow-hidden shrink-0 bg-[#111827]">
-                    {project.image ? (
+                    {(project.image || project.hasImage) ? (
                       <img
-                        src={project.image}
+                        src={project.image || `/api/image/projects/${project._id}`}
                         alt={project.name}
                         loading="lazy"
                         decoding="async"
@@ -143,7 +144,6 @@ export default function Projects({ projects }: Props) {
                     )}
                     {/* Overlay on hover */}
                     <div className="absolute inset-0 bg-linear-to-t from-[#0D1424] via-transparent to-transparent opacity-60" />
-
                     {/* Hover action buttons */}
                     <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       {project.githubLink && (

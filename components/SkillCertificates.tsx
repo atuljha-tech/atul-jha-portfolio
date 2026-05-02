@@ -11,6 +11,7 @@ interface Certificate {
   date: string
   credentialUrl?: string
   image?: string
+  hasImage?: boolean
 }
 
 interface Props {
@@ -73,15 +74,15 @@ export default function SkillCertificates({ certificates }: Props) {
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.08 }}
-              onClick={() => cert.image && setSelected(index)}
-              className={`group relative ${cert.image ? 'cursor-pointer' : ''}`}
+              onClick={() => (cert.image || cert.hasImage) && setSelected(index)}
+              className={`group relative ${(cert.image || cert.hasImage) ? 'cursor-pointer' : ''}`}
             >
               <div className="absolute -inset-0.5 bg-linear-to-r from-green-500/30 via-teal-500/30 to-blue-500/30 rounded-2xl opacity-0 group-hover:opacity-100 blur transition-opacity duration-500" />
               <div className="relative bg-[#0D1424] rounded-2xl border border-slate-800/50 overflow-hidden hover:border-transparent transition-all duration-300">
-                {cert.image && !cert.image.startsWith('data:application/pdf') ? (
+                {(cert.image || cert.hasImage) && !cert.image?.startsWith('data:application/pdf') ? (
                   <div className="relative aspect-[3/2] overflow-hidden">
                     <img
-                      src={cert.image}
+                      src={cert.image || `/api/image/skill-certs/${cert._id}`}
                       alt={cert.name}
                       loading="lazy"
                       decoding="async"
@@ -138,26 +139,19 @@ export default function SkillCertificates({ certificates }: Props) {
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl"
           onClick={() => setSelected(null)}
         >
-          <div
-            className="relative max-w-4xl w-full"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="relative aspect-[16/9] rounded-2xl overflow-hidden border border-slate-800/50">
-              {certificates[selected].image?.startsWith('data:application/pdf') ? (
-                <div className="w-full h-full flex flex-col items-center justify-center bg-[#0D1424] gap-4">
-                  <FileText className="w-16 h-16 text-red-400" />
-                  <a href={certificates[selected].image} download
-                    className="px-4 py-2 bg-purple-500 rounded-xl text-white text-sm">
-                    Download PDF
-                  </a>
-                </div>
-              ) : (
-                <img
-                  src={certificates[selected].image!}
-                  alt={certificates[selected].name}
-                  className="w-full h-full object-contain"
-                />
-              )}
+          <div className="relative max-w-4xl w-full" onClick={(e) => e.stopPropagation()}>
+            <div className="relative aspect-video rounded-2xl overflow-hidden border border-slate-800/50">
+              {(() => {
+                const imgSrc = certificates[selected].image || `/api/image/skill-certs/${certificates[selected]._id}`
+                return imgSrc.startsWith('data:application/pdf') ? (
+                  <div className="w-full h-full flex flex-col items-center justify-center bg-[#0D1424] gap-4">
+                    <FileText className="w-16 h-16 text-red-400" />
+                    <a href={imgSrc} download className="px-4 py-2 bg-purple-500 rounded-xl text-white text-sm">Download PDF</a>
+                  </div>
+                ) : (
+                  <img src={imgSrc} alt={certificates[selected].name} className="w-full h-full object-contain" />
+                )
+              })()}
               <button
                 onClick={handlePrev}
                 className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 border border-white/10 flex items-center justify-center hover:bg-purple-500/20 transition-colors"

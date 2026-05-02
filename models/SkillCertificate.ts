@@ -25,6 +25,8 @@ const SkillCertificateSchema = new Schema<ISkillCertificate>(
   { timestamps: true }
 )
 
+SkillCertificateSchema.index({ order: 1, date: -1 })
+
 const SkillCertificate: Model<ISkillCertificate> =
   mongoose.models.SkillCertificate ||
   mongoose.model<ISkillCertificate>('SkillCertificate', SkillCertificateSchema)

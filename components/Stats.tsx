@@ -303,14 +303,19 @@ export default function Stats() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    Promise.all([
-      fetch('/api/stats/github').then((r) => r.json()).catch(() => null),
-      fetch('/api/stats/leetcode').then((r) => r.json()).catch(() => null),
-    ]).then(([gh, lc]) => {
-      if (gh && !gh.error) setGithub(gh)
-      if (lc && !lc.error) setLeetcode(lc)
-      setLoading(false)
-    })
+    // Defer stats fetch — don't block initial page render
+    // Wait until page is interactive, then load stats
+    const timer = setTimeout(() => {
+      Promise.all([
+        fetch('/api/stats/github').then((r) => r.json()).catch(() => null),
+        fetch('/api/stats/leetcode').then((r) => r.json()).catch(() => null),
+      ]).then(([gh, lc]) => {
+        if (gh && !gh.error) setGithub(gh)
+        if (lc && !lc.error) setLeetcode(lc)
+        setLoading(false)
+      })
+    }, 1500) // 1.5s delay — page renders first, stats load after
+    return () => clearTimeout(timer)
   }, [])
 
   return (

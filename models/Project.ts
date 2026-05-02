@@ -36,6 +36,9 @@ const ProjectSchema = new Schema<IProject>(
   { timestamps: true }
 )
 
+// Index for common sort pattern
+ProjectSchema.index({ featured: -1, order: 1, createdAt: -1 })
+
 const Project: Model<IProject> =
   mongoose.models.Project || mongoose.model<IProject>('Project', ProjectSchema)
 
