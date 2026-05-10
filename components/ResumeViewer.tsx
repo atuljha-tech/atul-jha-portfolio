@@ -1,157 +1,265 @@
 'use client'
 
-import { useState } from 'react'
-import { X, Download, FileText, ExternalLink, ZoomIn, ZoomOut } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect, useCallback } from 'react'
+import { createPortal } from 'react-dom'
+import { X, Download, FileText, ExternalLink } from 'lucide-react'
 
 interface ResumeViewerProps {
-  hasResume: boolean   // true if a resume PDF or URL exists
+  hasResume: boolean
   fileName?: string
+}
+
+// The modal rendered via portal — completely outside the page DOM tree
+function ResumeModal({
+  onClose,
+  fileName,
+}: {
+  onClose: () => void
+  fileName?: string
+}) {
+  const [loaded, setLoaded] = useState(false)
+  const resumeUrl = '/api/resume'
+
+  // ESC to close
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
+    document.addEventListener('keydown', handler)
+    return () => document.removeEventListener('keydown', handler)
+  }, [onClose])
+
+  // Lock body scroll while open
+  useEffect(() => {
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = prev }
+  }, [])
+
+  return (
+    <div
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 9999,
+        display: 'flex',
+        flexDirection: 'column',
+        background: 'rgba(0,0,0,0.92)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
+        animation: 'fadeIn 0.18s ease',
+      }}
+      onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
+    >
+      <style>{`
+        @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(16px) } to { opacity: 1; transform: translateY(0) } }
+      `}</style>
+
+      {/* Top bar */}
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '12px 16px',
+        borderBottom: '1px solid rgba(255,255,255,0.07)',
+        background: 'rgba(13,20,36,0.9)',
+        flexShrink: 0,
+      }}>
+        {/* Left — title */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div style={{
+            width: 32, height: 32, borderRadius: 8,
+            background: 'rgba(139,92,246,0.15)',
+            border: '1px solid rgba(139,92,246,0.3)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>
+            <FileText size={15} color="#a78bfa" />
+          </div>
+          <div>
+            <p style={{ color: '#fff', fontSize: 13, fontWeight: 600, margin: 0 }}>Resume</p>
+            <p style={{ color: '#64748b', fontSize: 11, margin: 0 }}>{fileName || 'resume.pdf'}</p>
+          </div>
+        </div>
+
+        {/* Right — actions */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <a
+            href={resumeUrl}
+            download={fileName || 'resume.pdf'}
+            style={{
+              display: 'flex', alignItems: 'center', gap: 6,
+              padding: '7px 12px', borderRadius: 8,
+              background: 'rgba(139,92,246,0.15)',
+              border: '1px solid rgba(139,92,246,0.3)',
+              color: '#c4b5fd', fontSize: 12, fontWeight: 500,
+              textDecoration: 'none', cursor: 'pointer',
+            }}
+          >
+            <Download size={13} />
+            <span>Download</span>
+          </a>
+
+          <a
+            href={resumeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'flex', alignItems: 'center', gap: 6,
+              padding: '7px 12px', borderRadius: 8,
+              background: 'rgba(255,255,255,0.05)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              color: '#94a3b8', fontSize: 12, fontWeight: 500,
+              textDecoration: 'none', cursor: 'pointer',
+            }}
+          >
+            <ExternalLink size={13} />
+            <span>Open tab</span>
+          </a>
+
+          <button
+            onClick={onClose}
+            style={{
+              width: 34, height: 34, borderRadius: 8,
+              background: 'rgba(255,255,255,0.05)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer', color: '#94a3b8',
+            }}
+            aria-label="Close"
+          >
+            <X size={15} />
+          </button>
+        </div>
+      </div>
+
+      {/* PDF area */}
+      <div style={{
+        flex: 1,
+        overflow: 'auto',
+        display: 'flex',
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        padding: '20px 16px',
+        background: 'rgba(15,20,35,0.6)',
+      }}>
+        {/* Spinner */}
+        {!loaded && (
+          <div style={{
+            position: 'absolute',
+            inset: '60px 0 0 0',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 12,
+          }}>
+            <div style={{
+              width: 32, height: 32,
+              border: '2px solid rgba(139,92,246,0.2)',
+              borderTopColor: '#8b5cf6',
+              borderRadius: '50%',
+              animation: 'spin 0.7s linear infinite',
+            }} />
+            <p style={{ color: '#64748b', fontSize: 13 }}>Loading resume...</p>
+            <style>{`@keyframes spin { to { transform: rotate(360deg) } }`}</style>
+          </div>
+        )}
+
+        {/* iframe — the actual PDF */}
+        <div style={{
+          width: '100%',
+          maxWidth: 860,
+          animation: 'slideUp 0.25s ease',
+        }}>
+          <iframe
+            src={`${resumeUrl}#toolbar=0&navpanes=0`}
+            title="Resume"
+            style={{
+              width: '100%',
+              height: 'calc(100vh - 130px)',
+              minHeight: 480,
+              border: '1px solid rgba(255,255,255,0.07)',
+              borderRadius: 12,
+              background: '#fff',
+              opacity: loaded ? 1 : 0,
+              transition: 'opacity 0.3s ease',
+              display: 'block',
+            }}
+            onLoad={() => setLoaded(true)}
+          />
+        </div>
+      </div>
+
+      {/* Bottom bar */}
+      <div style={{
+        flexShrink: 0,
+        padding: '10px 16px',
+        borderTop: '1px solid rgba(255,255,255,0.05)',
+        background: 'rgba(13,20,36,0.7)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      }}>
+        <p style={{ color: '#334155', fontSize: 11, fontFamily: 'monospace' }}>
+          Press ESC or click outside to close
+        </p>
+        <a
+          href={resumeUrl}
+          download={fileName || 'resume.pdf'}
+          style={{
+            display: 'flex', alignItems: 'center', gap: 6,
+            padding: '8px 16px', borderRadius: 8,
+            background: 'linear-gradient(to right, #8b5cf6, #ec4899)',
+            color: '#fff', fontSize: 12, fontWeight: 600,
+            textDecoration: 'none', cursor: 'pointer',
+          }}
+        >
+          <Download size={13} />
+          Download PDF
+        </a>
+      </div>
+    </div>
+  )
 }
 
 export default function ResumeViewer({ hasResume, fileName }: ResumeViewerProps) {
   const [open, setOpen] = useState(false)
-  const [loaded, setLoaded] = useState(false)
-  const [zoom, setZoom] = useState(100)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => { setMounted(true) }, [])
+
+  const handleClose = useCallback(() => setOpen(false), [])
 
   if (!hasResume) return null
 
-  const resumeUrl = '/api/resume'
-
   return (
     <>
-      {/* Trigger button */}
+      {/* ── Trigger button — unique, not generic ── */}
       <button
-        onClick={() => { setOpen(true); setLoaded(false) }}
-        className="group relative inline-flex items-center gap-2 px-5 py-2.5 rounded-xl overflow-hidden font-semibold text-sm text-white transition-all duration-300 hover:-translate-y-0.5"
+        onClick={() => setOpen(true)}
+        className="group relative inline-flex items-center gap-2.5 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-purple-500/20"
+        style={{
+          background: 'linear-gradient(135deg, rgba(139,92,246,0.15) 0%, rgba(236,72,153,0.15) 100%)',
+          border: '1px solid rgba(139,92,246,0.35)',
+        }}
       >
-        <div className="absolute inset-0 bg-linear-to-r from-violet-500 to-pink-500" />
-        <div className="absolute inset-0 bg-linear-to-r from-violet-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity" />
-        <FileText className="relative w-4 h-4" />
-        <span className="relative">View Resume</span>
+        {/* Animated shimmer */}
+        <span
+          className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.25), rgba(236,72,153,0.25))' }}
+        />
+        <FileText className="relative w-4 h-4 text-purple-400 group-hover:text-purple-300 transition-colors" />
+        <span className="relative bg-linear-to-r from-purple-300 to-pink-300 text-transparent bg-clip-text">
+          View Resume
+        </span>
+        {/* Dot indicator */}
+        <span className="relative w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
       </button>
 
-      {/* Modal */}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[100] flex flex-col bg-black/95 backdrop-blur-xl"
-            onClick={(e) => { if (e.target === e.currentTarget) setOpen(false) }}
-          >
-            {/* Top bar */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-white/8 bg-[#0D1424]/80 backdrop-blur-sm shrink-0">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-violet-500/20 border border-violet-500/30 flex items-center justify-center">
-                  <FileText className="w-4 h-4 text-violet-400" />
-                </div>
-                <div>
-                  <p className="text-white text-sm font-semibold">Resume</p>
-                  <p className="text-slate-500 text-xs">{fileName || 'resume.pdf'}</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2">
-                {/* Zoom controls */}
-                <div className="hidden sm:flex items-center gap-1 px-2 py-1 bg-white/5 rounded-lg border border-white/8">
-                  <button
-                    onClick={() => setZoom(z => Math.max(50, z - 10))}
-                    className="w-7 h-7 flex items-center justify-center text-slate-400 hover:text-white transition-colors"
-                    aria-label="Zoom out"
-                  >
-                    <ZoomOut className="w-3.5 h-3.5" />
-                  </button>
-                  <span className="text-xs text-slate-400 w-10 text-center font-mono">{zoom}%</span>
-                  <button
-                    onClick={() => setZoom(z => Math.min(200, z + 10))}
-                    className="w-7 h-7 flex items-center justify-center text-slate-400 hover:text-white transition-colors"
-                    aria-label="Zoom in"
-                  >
-                    <ZoomIn className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-
-                {/* Download */}
-                <a
-                  href={resumeUrl}
-                  download={fileName || 'resume.pdf'}
-                  className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-violet-500/15 border border-violet-500/25 text-violet-300 text-xs font-medium hover:bg-violet-500/25 transition-colors"
-                >
-                  <Download className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">Download</span>
-                </a>
-
-                {/* Open in new tab */}
-                <a
-                  href={resumeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white/5 border border-white/8 text-slate-400 text-xs font-medium hover:text-white hover:border-white/20 transition-colors"
-                >
-                  <ExternalLink className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">Open</span>
-                </a>
-
-                {/* Close */}
-                <button
-                  onClick={() => setOpen(false)}
-                  className="w-9 h-9 rounded-lg bg-white/5 border border-white/8 flex items-center justify-center text-slate-400 hover:text-white hover:bg-red-500/15 hover:border-red-500/30 transition-all"
-                  aria-label="Close"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-
-            {/* PDF viewer */}
-            <div className="flex-1 overflow-auto flex items-start justify-center p-4 bg-slate-900/50">
-              {/* Loading state */}
-              {!loaded && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="flex flex-col items-center gap-3">
-                    <div className="w-8 h-8 border-2 border-violet-500/30 border-t-violet-500 rounded-full animate-spin" />
-                    <p className="text-slate-500 text-sm">Loading resume...</p>
-                  </div>
-                </div>
-              )}
-
-              <div
-                style={{ width: `${zoom}%`, maxWidth: '900px', minWidth: '300px' }}
-                className="transition-all duration-200"
-              >
-                <iframe
-                  src={`${resumeUrl}#toolbar=0&navpanes=0&scrollbar=1`}
-                  className="w-full rounded-xl border border-white/8 shadow-2xl shadow-black/50"
-                  style={{
-                    height: 'calc(100vh - 120px)',
-                    minHeight: '500px',
-                    opacity: loaded ? 1 : 0,
-                    transition: 'opacity 0.3s',
-                  }}
-                  onLoad={() => setLoaded(true)}
-                  title="Resume"
-                />
-              </div>
-            </div>
-
-            {/* Bottom bar */}
-            <div className="shrink-0 px-4 py-2.5 border-t border-white/5 bg-[#0D1424]/60 flex items-center justify-between">
-              <p className="text-xs text-slate-600 font-mono">Press ESC or click outside to close</p>
-              <a
-                href={resumeUrl}
-                download={fileName || 'resume.pdf'}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-linear-to-r from-violet-500 to-pink-500 text-white text-xs font-semibold hover:opacity-90 transition-opacity"
-              >
-                <Download className="w-3.5 h-3.5" />
-                Download PDF
-              </a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* ── Portal modal — rendered outside page DOM ── */}
+      {mounted && open && createPortal(
+        <ResumeModal onClose={handleClose} fileName={fileName} />,
+        document.body
+      )}
     </>
   )
 }
