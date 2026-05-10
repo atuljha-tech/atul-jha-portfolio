@@ -8,7 +8,7 @@ import { uploadFile } from '@/lib/upload'
 export async function GET() {
   try {
     await connectDB()
-    let settings = await SiteSettings.findOne()
+    let settings = await SiteSettings.findOne().select('-resumePdf -aboutImage')
     if (!settings) settings = await SiteSettings.create({})
     return NextResponse.json({ settings })
   } catch {
@@ -25,38 +25,38 @@ export async function PUT(req: NextRequest) {
     const formData = await req.formData()
 
     const body = {
-      heroName: formData.get('heroName') as string,
-      heroTitle: formData.get('heroTitle') as string,
-      heroSubtitle: (formData.get('heroSubtitle') as string) || '',
+      heroName:        (formData.get('heroName')        as string) || '',
+      heroTitle:       (formData.get('heroTitle')       as string) || '',
+      heroSubtitle:    (formData.get('heroSubtitle')    as string) || '',
       heroDescription: (formData.get('heroDescription') as string) || '',
-      aboutText: (formData.get('aboutText') as string) || '',
-      resumeUrl: (formData.get('resumeUrl') as string) || '',
-      githubUrl: (formData.get('githubUrl') as string) || '',
-      linkedinUrl: (formData.get('linkedinUrl') as string) || '',
-      twitterUrl: (formData.get('twitterUrl') as string) || '',
-      email: (formData.get('email') as string) || '',
-      location: (formData.get('location') as string) || '',
-      cgpa: (formData.get('cgpa') as string) || '',
-      batch: (formData.get('batch') as string) || '',
-      college: (formData.get('college') as string) || '',
+      aboutText:       (formData.get('aboutText')       as string) || '',
+      resumeUrl:       (formData.get('resumeUrl')       as string) || '',
+      githubUrl:       (formData.get('githubUrl')       as string) || '',
+      linkedinUrl:     (formData.get('linkedinUrl')     as string) || '',
+      twitterUrl:      (formData.get('twitterUrl')      as string) || '',
+      email:           (formData.get('email')           as string) || '',
+      location:        (formData.get('location')        as string) || '',
+      cgpa:            (formData.get('cgpa')            as string) || '',
+      batch:           (formData.get('batch')           as string) || '',
+      college:         (formData.get('college')         as string) || '',
     }
 
     const parsed = siteSettingsSchema.safeParse(body)
     if (!parsed.success) {
-      return NextResponse.json({ error: parsed.error.errors[0].message }, { status: 400 })
+      const firstError = parsed.error.errors[0]
+      console.error('Validation error:', parsed.error.errors)
+      return NextResponse.json(
+        { error: `${firstError.path.join('.')}: ${firstError.message}` },
+        { status: 400 }
+      )
     }
 
     let existing = await SiteSettings.findOne()
     if (!existing) existing = new SiteSettings({})
 
-    let aboutImage = existing.aboutImage
+    // Keep existing resumePdf unless a new one is uploaded
     let resumePdf = existing.resumePdf
     let resumeFileName = existing.resumeFileName
-
-    const imageFile = formData.get('aboutImage') as File | null
-    if (imageFile && imageFile.size > 0) {
-      aboutImage = await uploadFile(imageFile)
-    }
 
     const resumeFile = formData.get('resumePdf') as File | null
     if (resumeFile && resumeFile.size > 0) {
@@ -66,10 +66,11 @@ export async function PUT(req: NextRequest) {
 
     const settings = await SiteSettings.findOneAndUpdate(
       {},
-      { ...parsed.data, aboutImage, resumePdf, resumeFileName },
+      { ...parsed.data, resumePdf, resumeFileName },
       { new: true, upsert: true }
     )
-    return NextResponse.json({ settings })
+
+    return NextResponse.json({ success: true, settings: { heroName: settings.heroName } })
   } catch (error) {
     console.error('Update settings error:', error)
     return NextResponse.json(
