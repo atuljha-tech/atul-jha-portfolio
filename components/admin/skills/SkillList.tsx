@@ -62,7 +62,7 @@ export default function SkillList({ initialSkills }: { initialSkills: Skill[] })
           </p>
         </div>
         <Link
-          href="/admin/skills/new"
+          href="/adminprivateatuljha123/skills/new"
           className="flex items-center gap-2 px-4 py-2 rounded-xl bg-linear-to-r from-purple-500 to-pink-500 text-white text-sm font-medium hover:opacity-90 transition-opacity"
         >
           <Plus className="w-4 h-4" />
@@ -75,7 +75,7 @@ export default function SkillList({ initialSkills }: { initialSkills: Skill[] })
           <Code2 className="w-12 h-12 text-slate-700 mx-auto mb-3" />
           <p className="text-slate-400 mb-4">No skills yet</p>
           <Link
-            href="/admin/skills/new"
+            href="/adminprivateatuljha123/skills/new"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-linear-to-r from-purple-500 to-pink-500 text-white text-sm font-medium"
           >
             <Plus className="w-4 h-4" />

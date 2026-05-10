@@ -41,7 +41,7 @@ export default function HackathonList({ initialCerts }: { initialCerts: Cert[] }
           </p>
         </div>
         <Link
-          href="/admin/hackathons/new"
+          href="/adminprivateatuljha123/hackathons/new"
           className="flex items-center gap-2 px-4 py-2 rounded-xl bg-linear-to-r from-yellow-500 to-orange-500 text-white text-sm font-medium hover:opacity-90 transition-opacity"
         >
           <Plus className="w-4 h-4" />
@@ -54,7 +54,7 @@ export default function HackathonList({ initialCerts }: { initialCerts: Cert[] }
           <Trophy className="w-12 h-12 text-slate-700 mx-auto mb-3" />
           <p className="text-slate-400 mb-4">No hackathon certificates yet</p>
           <Link
-            href="/admin/hackathons/new"
+            href="/adminprivateatuljha123/hackathons/new"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-linear-to-r from-yellow-500 to-orange-500 text-white text-sm font-medium"
           >
             <Plus className="w-4 h-4" />

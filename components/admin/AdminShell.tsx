@@ -25,12 +25,12 @@ interface AdminShellProps {
 }
 
 const navItems = [
-  { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
-  { href: '/admin/hackathons', label: 'Hackathon Certs', icon: Trophy },
-  { href: '/admin/projects', label: 'Projects', icon: Briefcase },
-  { href: '/admin/skill-certificates', label: 'Skill Certs', icon: Award },
-  { href: '/admin/skills', label: 'Skills Learned', icon: Code2 },
-  { href: '/admin/settings', label: 'Site Settings', icon: Settings },
+  { href: '/adminprivateatuljha123', label: 'Dashboard', icon: LayoutDashboard, exact: true },
+  { href: '/adminprivateatuljha123/hackathons', label: 'Hackathon Certs', icon: Trophy },
+  { href: '/adminprivateatuljha123/projects', label: 'Projects', icon: Briefcase },
+  { href: '/adminprivateatuljha123/skill-certificates', label: 'Skill Certs', icon: Award },
+  { href: '/adminprivateatuljha123/skills', label: 'Skills Learned', icon: Code2 },
+  { href: '/adminprivateatuljha123/settings', label: 'Site Settings', icon: Settings },
 ]
 
 export default function AdminShell({ children, user }: AdminShellProps) {
@@ -41,7 +41,7 @@ export default function AdminShell({ children, user }: AdminShellProps) {
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' })
     toast.success('Logged out')
-    router.push('/admin/login')
+    router.push('/adminprivateatuljha123/login')
     router.refresh()
   }
 

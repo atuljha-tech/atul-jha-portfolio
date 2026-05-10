@@ -48,7 +48,7 @@ export default function HackathonForm({ initialData }: Props) {
       }
 
       toast.success(isEdit ? 'Certificate updated!' : 'Certificate added!')
-      window.location.href = '/admin/hackathons'
+      window.location.href = '/adminprivateatuljha123/hackathons'
     } catch {
       toast.error('Something went wrong')
     } finally {
@@ -61,7 +61,7 @@ export default function HackathonForm({ initialData }: Props) {
       {/* Header */}
       <div className="flex items-center gap-3 mb-6">
         <Link
-          href="/admin/hackathons"
+          href="/adminprivateatuljha123/hackathons"
           className="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center hover:border-slate-600 transition-colors"
         >
           <ArrowLeft className="w-4 h-4 text-slate-400" />
@@ -128,7 +128,7 @@ export default function HackathonForm({ initialData }: Props) {
             {loading ? 'Saving...' : isEdit ? 'Update' : 'Add Certificate'}
           </button>
           <Link
-            href="/admin/hackathons"
+            href="/adminprivateatuljha123/hackathons"
             className="px-6 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-300 text-sm font-medium hover:bg-slate-700 transition-colors"
           >
             Cancel

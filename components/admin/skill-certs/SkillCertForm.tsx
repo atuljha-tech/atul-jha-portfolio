@@ -60,7 +60,7 @@ export default function SkillCertForm({ initialData }: Props) {
       }
 
       toast.success(isEdit ? 'Certificate updated!' : 'Certificate added!')
-      window.location.href = '/admin/skill-certificates'
+      window.location.href = '/adminprivateatuljha123/skill-certificates'
     } catch (err) {
       console.error('Submit error:', err)
       toast.error(err instanceof Error ? err.message : 'Something went wrong')
@@ -73,7 +73,7 @@ export default function SkillCertForm({ initialData }: Props) {
     <div className="max-w-2xl mx-auto">
       <div className="flex items-center gap-3 mb-6">
         <Link
-          href="/admin/skill-certificates"
+          href="/adminprivateatuljha123/skill-certificates"
           className="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center hover:border-slate-600 transition-colors"
         >
           <ArrowLeft className="w-4 h-4 text-slate-400" />
@@ -172,7 +172,7 @@ export default function SkillCertForm({ initialData }: Props) {
             {loading ? 'Saving...' : isEdit ? 'Update Certificate' : 'Add Certificate'}
           </button>
           <Link
-            href="/admin/skill-certificates"
+            href="/adminprivateatuljha123/skill-certificates"
             className="px-6 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-300 text-sm font-medium hover:bg-slate-700 transition-colors"
           >
             Cancel

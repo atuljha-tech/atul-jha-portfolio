@@ -77,7 +77,7 @@ export default function ProjectForm({ initialData }: Props) {
       }
 
       toast.success(isEdit ? 'Project updated!' : 'Project added!')
-      window.location.href = '/admin/projects'
+      window.location.href = '/adminprivateatuljha123/projects'
     } catch {
       toast.error('Something went wrong')
     } finally {
@@ -89,7 +89,7 @@ export default function ProjectForm({ initialData }: Props) {
     <div className="max-w-2xl mx-auto">
       <div className="flex items-center gap-3 mb-6">
         <Link
-          href="/admin/projects"
+          href="/adminprivateatuljha123/projects"
           className="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center hover:border-slate-600 transition-colors"
         >
           <ArrowLeft className="w-4 h-4 text-slate-400" />
@@ -255,7 +255,7 @@ export default function ProjectForm({ initialData }: Props) {
             {loading ? 'Saving...' : isEdit ? 'Update Project' : 'Add Project'}
           </button>
           <Link
-            href="/admin/projects"
+            href="/adminprivateatuljha123/projects"
             className="px-6 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-300 text-sm font-medium hover:bg-slate-700 transition-colors"
           >
             Cancel
