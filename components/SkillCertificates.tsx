@@ -134,51 +134,67 @@ export default function SkillCertificates({ certificates }: Props) {
       </div>
 
       {/* Lightbox */}
-      {selected !== null && certificates[selected]?.image && (
+      {selected !== null && (certificates[selected]?.image || certificates[selected]?.hasImage) && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/92 backdrop-blur-xl"
           onClick={() => setSelected(null)}
         >
-          <div className="relative max-w-4xl w-full" onClick={(e) => e.stopPropagation()}>
-            <div className="relative aspect-video rounded-2xl overflow-hidden border border-slate-800/50">
+          <div className="relative w-full max-w-3xl" onClick={(e) => e.stopPropagation()}>
+
+            {/* Close */}
+            <button
+              onClick={() => setSelected(null)}
+              className="absolute -top-10 right-0 w-9 h-9 rounded-full bg-white/10 border border-white/15 flex items-center justify-center hover:bg-red-500/30 transition-colors z-10"
+            >
+              <X className="w-4 h-4 text-white" />
+            </button>
+
+            {/* Image container — natural height, no forced ratio */}
+            <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-[#0D1424] shadow-2xl shadow-black/60">
               {(() => {
                 const imgSrc = certificates[selected].image || `/api/image/skill-certs/${certificates[selected]._id}`
                 return imgSrc.startsWith('data:application/pdf') ? (
-                  <div className="w-full h-full flex flex-col items-center justify-center bg-[#0D1424] gap-4">
+                  <div className="flex flex-col items-center justify-center py-20 gap-4">
                     <FileText className="w-16 h-16 text-red-400" />
-                    <a href={imgSrc} download className="px-4 py-2 bg-purple-500 rounded-xl text-white text-sm">Download PDF</a>
+                    <a href={imgSrc} download className="px-4 py-2 bg-purple-500 rounded-xl text-white text-sm">
+                      Download PDF
+                    </a>
                   </div>
                 ) : (
-                  <img src={imgSrc} alt={certificates[selected].name} className="w-full h-full object-contain" />
+                  <img
+                    src={imgSrc}
+                    alt={certificates[selected].name}
+                    className="w-full h-auto max-h-[80vh] object-contain"
+                  />
                 )
               })()}
+
+              {/* Prev */}
               <button
                 onClick={handlePrev}
-                className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 border border-white/10 flex items-center justify-center hover:bg-purple-500/20 transition-colors"
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 border border-white/10 flex items-center justify-center hover:bg-purple-500/30 transition-colors"
               >
                 <ChevronLeft className="w-4 h-4 text-white" />
               </button>
+
+              {/* Next */}
               <button
                 onClick={handleNext}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 border border-white/10 flex items-center justify-center hover:bg-purple-500/20 transition-colors"
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 border border-white/10 flex items-center justify-center hover:bg-purple-500/30 transition-colors"
               >
                 <ChevronRight className="w-4 h-4 text-white" />
               </button>
-              <button
-                onClick={() => setSelected(null)}
-                className="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/50 border border-white/10 flex items-center justify-center hover:bg-red-500/20 transition-colors"
-              >
-                <X className="w-4 h-4 text-white" />
-              </button>
-              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-black/50 backdrop-blur-sm rounded-full border border-white/10">
-                <span className="text-xs text-white">
-                  {selected + 1} / {certificates.length}
-                </span>
+
+              {/* Counter */}
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-black/60 backdrop-blur-sm rounded-full border border-white/10">
+                <span className="text-xs text-white">{selected + 1} / {certificates.length}</span>
               </div>
             </div>
-            <div className="mt-3 text-center">
-              <p className="text-white font-medium">{certificates[selected].name}</p>
-              <p className="text-slate-400 text-sm">{certificates[selected].platform}</p>
+
+            {/* Title below */}
+            <div className="mt-4 text-center">
+              <p className="text-white font-semibold">{certificates[selected].name}</p>
+              <p className="text-slate-400 text-sm mt-0.5">{certificates[selected].platform}</p>
             </div>
           </div>
         </div>
