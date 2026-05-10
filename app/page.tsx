@@ -40,7 +40,8 @@ async function getData() {
     const [settings, projects, hackathonCerts, skillCerts, skills] = await Promise.all([
       SiteSettings.findOne()
         // Only fetch fields we actually use — skip aboutImage (base64)
-        .select('heroName heroTitle heroSubtitle heroDescription githubUrl linkedinUrl twitterUrl email location cgpa batch college resumeUrl')
+        // Also check if resumePdf exists (don't fetch the full base64, just check)
+        .select('heroName heroTitle heroSubtitle heroDescription githubUrl linkedinUrl twitterUrl email location cgpa batch college resumeUrl resumeFileName resumePdf')
         .lean(),
       Project.find()
         .select('name description techStack githubLink liveLink category featured order image')
@@ -77,7 +78,13 @@ async function getData() {
 export default async function Home() {
   const { settings, projects, hackathonCerts, skillCerts, skills } = await getData()
 
-  const s  = JSON.parse(JSON.stringify(settings))
+  const rawSettings = settings as any
+  const s = JSON.parse(JSON.stringify({
+    ...rawSettings,
+    // Don't send the full base64 PDF to the browser — just a flag
+    hasResume: !!(rawSettings?.resumePdf || rawSettings?.resumeUrl),
+    resumePdf: undefined, // strip the huge base64
+  }))
   const p  = JSON.parse(JSON.stringify(projects))
   const hc = JSON.parse(JSON.stringify(hackathonCerts))
   const sc = JSON.parse(JSON.stringify(skillCerts))

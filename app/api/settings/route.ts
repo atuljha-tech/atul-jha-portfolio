@@ -50,15 +50,23 @@ export async function PUT(req: NextRequest) {
     if (!existing) existing = new SiteSettings({})
 
     let aboutImage = existing.aboutImage
+    let resumePdf = existing.resumePdf
+    let resumeFileName = existing.resumeFileName
 
     const imageFile = formData.get('aboutImage') as File | null
     if (imageFile && imageFile.size > 0) {
       aboutImage = await uploadFile(imageFile)
     }
 
+    const resumeFile = formData.get('resumePdf') as File | null
+    if (resumeFile && resumeFile.size > 0) {
+      resumePdf = await uploadFile(resumeFile)
+      resumeFileName = resumeFile.name
+    }
+
     const settings = await SiteSettings.findOneAndUpdate(
       {},
-      { ...parsed.data, aboutImage },
+      { ...parsed.data, aboutImage, resumePdf, resumeFileName },
       { new: true, upsert: true }
     )
     return NextResponse.json({ settings })

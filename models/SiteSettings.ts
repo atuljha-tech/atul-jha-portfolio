@@ -9,6 +9,8 @@ export interface ISiteSettings extends Document {
   aboutImage?: string
   aboutImagePublicId?: string
   resumeUrl?: string
+  resumePdf?: string        // base64 stored PDF
+  resumeFileName?: string   // original filename
   githubUrl?: string
   linkedinUrl?: string
   twitterUrl?: string
@@ -30,6 +32,8 @@ const SiteSettingsSchema = new Schema<ISiteSettings>(
     aboutImage: { type: String },
     aboutImagePublicId: { type: String },
     resumeUrl: { type: String },
+    resumePdf: { type: String },
+    resumeFileName: { type: String },
     githubUrl: { type: String },
     linkedinUrl: { type: String },
     twitterUrl: { type: String },

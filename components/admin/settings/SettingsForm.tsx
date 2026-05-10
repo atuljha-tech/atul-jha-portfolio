@@ -1,21 +1,20 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { siteSettingsSchema, SiteSettingsInput } from '@/lib/validations'
 import ImageUpload from '@/components/admin/ImageUpload'
-import { Settings, Save } from 'lucide-react'
+import { Settings, Save, FileText, CheckCircle } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 interface Props {
-  initialData: SiteSettingsInput & { aboutImage?: string }
+  initialData: SiteSettingsInput & { aboutImage?: string; resumeFileName?: string; resumePdf?: string }
 }
 
 export default function SettingsForm({ initialData }: Props) {
-  const router = useRouter()
   const [imageFile, setImageFile] = useState<File | null>(null)
+  const [resumeFile, setResumeFile] = useState<File | null>(null)
   const [loading, setLoading] = useState(false)
 
   const {
@@ -50,6 +49,7 @@ export default function SettingsForm({ initialData }: Props) {
         if (v !== undefined && v !== null) formData.append(k, String(v))
       })
       if (imageFile) formData.append('aboutImage', imageFile)
+      if (resumeFile) formData.append('resumePdf', resumeFile)
 
       const res = await fetch('/api/settings', { method: 'PUT', body: formData })
       const json = await res.json()
@@ -169,7 +169,70 @@ export default function SettingsForm({ initialData }: Props) {
           <Field label="GitHub URL" name="githubUrl" type="url" placeholder="https://github.com/username" />
           <Field label="LinkedIn URL" name="linkedinUrl" type="url" placeholder="https://linkedin.com/in/username" />
           <Field label="Twitter URL" name="twitterUrl" type="url" placeholder="https://twitter.com/username" />
-          <Field label="Resume URL" name="resumeUrl" type="url" placeholder="https://drive.google.com/..." />
+          <Field label="Resume URL (fallback)" name="resumeUrl" type="url" placeholder="https://drive.google.com/..." />
+        </Section>
+
+        {/* Resume Upload */}
+        <Section title="RESUME PDF">
+          <div>
+            <p className="text-xs text-slate-500 mb-4">
+              Upload your resume PDF directly. This will be shown in the portfolio popup viewer.
+              Visitors can view and download it. Uploading a new file replaces the old one.
+            </p>
+
+            {/* Current resume indicator */}
+            {(initialData.resumePdf || initialData.resumeFileName) && !resumeFile && (
+              <div className="flex items-center gap-3 p-3 mb-4 bg-green-500/10 border border-green-500/20 rounded-xl">
+                <CheckCircle className="w-4 h-4 text-green-400 shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm text-green-300 font-medium">Resume uploaded</p>
+                  <p className="text-xs text-green-600 truncate">{initialData.resumeFileName || 'resume.pdf'}</p>
+                </div>
+                <a href="/api/resume" target="_blank" rel="noopener noreferrer"
+                  className="text-xs text-green-400 hover:text-green-300 transition-colors shrink-0">
+                  Preview ↗
+                </a>
+              </div>
+            )}
+
+            {/* New file selected indicator */}
+            {resumeFile && (
+              <div className="flex items-center gap-3 p-3 mb-4 bg-blue-500/10 border border-blue-500/20 rounded-xl">
+                <FileText className="w-4 h-4 text-blue-400 shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm text-blue-300 font-medium">New resume ready to upload</p>
+                  <p className="text-xs text-blue-600 truncate">{resumeFile.name}</p>
+                </div>
+                <button type="button" onClick={() => setResumeFile(null)}
+                  className="text-xs text-slate-500 hover:text-red-400 transition-colors shrink-0">
+                  Remove
+                </button>
+              </div>
+            )}
+
+            {/* File picker */}
+            <label className="flex items-center gap-3 px-4 py-3 rounded-xl border-2 border-dashed border-slate-700 hover:border-purple-500/50 hover:bg-slate-800/30 cursor-pointer transition-all">
+              <FileText className="w-5 h-5 text-slate-500" />
+              <div>
+                <p className="text-sm text-slate-300 font-medium">
+                  {resumeFile ? 'Change PDF' : 'Upload Resume PDF'}
+                </p>
+                <p className="text-xs text-slate-600">PDF only, max 5MB</p>
+              </div>
+              <input
+                type="file"
+                accept="application/pdf"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0]
+                  if (!file) return
+                  if (file.type !== 'application/pdf') { toast.error('Only PDF files allowed'); return }
+                  if (file.size > 5 * 1024 * 1024) { toast.error('File must be under 5MB'); return }
+                  setResumeFile(file)
+                }}
+              />
+            </label>
+          </div>
         </Section>
 
         <button

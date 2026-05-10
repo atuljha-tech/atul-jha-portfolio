@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { Github, Linkedin, Mail, Twitter, Code2, Cpu, Database, Rocket, Sparkles } from 'lucide-react'
 import Image from 'next/image'
+import ResumeViewer from '@/components/ResumeViewer'
 
 interface HeroProps {
   settings: {
@@ -16,6 +17,8 @@ interface HeroProps {
     twitterUrl?: string
     email?: string
     resumeUrl?: string
+    hasResume?: boolean
+    resumeFileName?: string
   }
 }
 
@@ -120,12 +123,11 @@ export default function Hero({ settings }: HeroProps) {
 
             {/* Social + Resume */}
             <div className="flex items-center gap-3 flex-wrap">
-              {settings.resumeUrl && (
-                <a href={settings.resumeUrl} target="_blank" rel="noopener noreferrer"
-                  className="px-5 py-2.5 rounded-xl bg-linear-to-r from-blue-500 to-purple-500 text-white text-sm font-semibold hover:opacity-90 transition-opacity">
-                  Resume
-                </a>
-              )}
+              {/* Resume viewer button */}
+              <ResumeViewer
+                hasResume={!!(settings.hasResume || settings.resumeUrl)}
+                fileName={settings.resumeFileName}
+              />
               {socialLinks.map(({ icon: Icon, href, label }) => (
                 <a key={label} href={href}
                   target={href.startsWith('mailto') ? undefined : '_blank'}
