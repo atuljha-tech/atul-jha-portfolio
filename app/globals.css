@@ -167,6 +167,11 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+/* Cursive font class */
+.font-cursive {
+  font-family: var(--font-dancing), 'Dancing Script', cursive;
+}
+
 /* Electric violet gradient */
 .text-violet-gradient {
   background: linear-gradient(135deg, #FFFFFF 20%, #C084FC 60%, #9333EA 100%);

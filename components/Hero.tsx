@@ -62,20 +62,7 @@ export default function Hero({ settings }: HeroProps) {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto w-full">
-        {/* Clean Header Tag */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="flex justify-start mb-8"
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0E0B19] border border-amber-500/30 shadow-lg shadow-amber-500/10">
-            <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
-            <span className="text-xs font-mono tracking-widest text-amber-300 uppercase">
-              CREATIVE ENGINEERING & INFRASTRUCTURE
-            </span>
-          </div>
-        </motion.div>
+
 
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           {/* Left Column (Main Intro & Headline) */}
@@ -184,17 +171,7 @@ export default function Hero({ settings }: HeroProps) {
                 <div className="absolute inset-0 bg-linear-to-t from-[#0E0B19] via-transparent to-transparent opacity-40" />
               </div>
 
-              {/* Floating Status Badge */}
-              <motion.div
-                animate={{ y: [-6, 6, -6] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute -bottom-3 right-2 px-4 py-2 bg-[#0E0B19] rounded-2xl border border-amber-500/40 shadow-2xl shadow-black flex items-center gap-2"
-              >
-                <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
-                <span className="text-[11px] font-mono font-bold tracking-wider text-slate-100 uppercase">
-                  AVAILABLE FOR COLLAB
-                </span>
-              </motion.div>
+
             </div>
           </motion.div>
         </div>

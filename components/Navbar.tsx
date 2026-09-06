@@ -52,16 +52,10 @@ export default function Navbar({ settings }: NavbarProps) {
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
 
-        {/* Brand Mark */}
-        <button onClick={() => scrollTo('home')} className="group flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-linear-to-br from-purple-600 to-amber-500 p-0.5 flex items-center justify-center shadow-lg shadow-purple-600/30">
-            <div className="w-full h-full bg-[#07050E] rounded-[7px] flex items-center justify-center">
-              <span className="text-amber-400 text-xs font-black tracking-tighter">AJ</span>
-            </div>
-          </div>
-          <span className="text-lg font-black tracking-wider text-white group-hover:text-amber-400 transition-colors uppercase">
-            {settings.heroName?.toUpperCase() || 'ATUL JHA'}
-            <span className="text-amber-400">.</span>
+        {/* Stylish Cursive AJ Logo */}
+        <button onClick={() => scrollTo('home')} className="group flex items-center gap-1">
+          <span className="font-cursive text-4xl sm:text-5xl text-gold-gradient font-bold tracking-tight hover:scale-105 transition-transform duration-300 drop-shadow-[0_0_15px_rgba(245,158,11,0.5)]">
+            aj
           </span>
         </button>
 
