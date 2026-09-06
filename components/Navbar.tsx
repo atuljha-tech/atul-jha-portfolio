@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Menu, X, FileText, Home, User, Code, Briefcase, Mail, Star, BarChart2, Sparkles } from 'lucide-react'
+import { Menu, X, FileText, Home, User, Code, Briefcase, Mail, Star, BarChart2, Trophy } from 'lucide-react'
 
 interface NavbarProps {
   settings: { heroName?: string; resumeUrl?: string }
@@ -14,7 +14,7 @@ const navLinks = [
   { href: '#skill-certs',label: 'CERTS',        icon: Star      },
   { href: '#skills',     label: 'SKILLS',       icon: Code      },
   { href: '#stats',      label: 'STATS',        icon: BarChart2 },
-  { href: '#hackathons', label: 'HACKATHONS',   icon: Sparkles  },
+  { href: '#hackathons', label: 'HACKATHONS',   icon: Trophy    },
   { href: '#contact',    label: 'CONTACT',      icon: Mail      },
 ]
 

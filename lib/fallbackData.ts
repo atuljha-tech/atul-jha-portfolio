@@ -12,24 +12,24 @@ export const fallbackProjects = [
   },
   {
     _id: 'fallback-proj-2',
-    name: 'AI Code Assistant & Reviewer',
+    name: 'Distributed Task Queue & Job Scheduler',
     description:
-      'Full-stack developer platform featuring real-time AI code analysis, automated refactoring suggestions, and visual diff tracking.',
-    techStack: ['React', 'TypeScript', 'Node.js', 'Express', 'MongoDB'],
+      'High-throughput asynchronous task processing engine built with Node.js, Redis, and Express with real-time job monitoring dashboard.',
+    techStack: ['TypeScript', 'Node.js', 'Express', 'Redis', 'MongoDB'],
     githubLink: 'https://github.com/atuljha-tech',
     liveLink: 'https://github.com/atuljha-tech',
-    category: 'AI/ML',
+    category: 'Backend',
     featured: true,
   },
   {
     _id: 'fallback-proj-3',
-    name: 'Smart IoT Home Controller',
+    name: 'Real-Time Telemetry & Monitoring Dashboard',
     description:
-      'Real-time IoT web dashboard monitoring micro-controller sensors with live WebSocket streaming data and dynamic charts.',
+      'Web dashboard monitoring server telemetry and live WebSocket metric streams with dynamic interactive charts.',
     techStack: ['Next.js', 'WebSockets', 'Chart.js', 'Tailwind CSS'],
     githubLink: 'https://github.com/atuljha-tech',
     liveLink: 'https://github.com/atuljha-tech',
-    category: 'IoT',
+    category: 'Web',
     featured: false,
   },
   {
@@ -85,12 +85,12 @@ export const fallbackHackathonCerts = [
 ]
 
 export const fallbackSkills = [
-  { _id: 'fallback-sk-1', name: 'React / Next.js', category: 'Frontend', proficiency: 92, icon: '⚛️' },
-  { _id: 'fallback-sk-2', name: 'TypeScript', category: 'Frontend', proficiency: 88, icon: '📘' },
-  { _id: 'fallback-sk-3', name: 'Tailwind CSS', category: 'Frontend', proficiency: 95, icon: '🎨' },
-  { _id: 'fallback-sk-4', name: 'Node.js & Express', category: 'Backend', proficiency: 85, icon: '🟢' },
-  { _id: 'fallback-sk-5', name: 'MongoDB & Mongoose', category: 'Database', proficiency: 87, icon: '🍃' },
-  { _id: 'fallback-sk-6', name: 'Solidity & Web3', category: 'Blockchain', proficiency: 80, icon: '⛓️' },
-  { _id: 'fallback-sk-7', name: 'Git & GitHub Workflow', category: 'Tools', proficiency: 90, icon: '🐙' },
-  { _id: 'fallback-sk-8', name: 'REST APIs & WebSockets', category: 'Backend', proficiency: 88, icon: '🔌' },
+  { _id: 'fallback-sk-1', name: 'React / Next.js', category: 'Frontend', proficiency: 92 },
+  { _id: 'fallback-sk-2', name: 'TypeScript', category: 'Frontend', proficiency: 88 },
+  { _id: 'fallback-sk-3', name: 'Tailwind CSS', category: 'Frontend', proficiency: 95 },
+  { _id: 'fallback-sk-4', name: 'Node.js & Express', category: 'Backend', proficiency: 85 },
+  { _id: 'fallback-sk-5', name: 'MongoDB & Mongoose', category: 'Database', proficiency: 87 },
+  { _id: 'fallback-sk-6', name: 'Solidity & Web3', category: 'Blockchain', proficiency: 80 },
+  { _id: 'fallback-sk-7', name: 'Git & GitHub Workflow', category: 'Tools', proficiency: 90 },
+  { _id: 'fallback-sk-8', name: 'REST APIs & WebSockets', category: 'Backend', proficiency: 88 },
 ]
