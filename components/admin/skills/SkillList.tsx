@@ -108,7 +108,7 @@ export default function SkillList({ initialSkills }: { initialSkills: Skill[] })
                 </div>
                 <div className="flex items-center gap-1 shrink-0">
                   <Link
-                    href={`/admin/skills/${skill._id}/edit`}
+                    href={`/adminprivateatuljha123/skills/${skill._id}/edit`}
                     className="p-1.5 rounded-lg text-slate-500 hover:text-blue-400 hover:bg-blue-500/10 transition-all"
                   >
                     <Pencil className="w-3.5 h-3.5" />

@@ -82,7 +82,7 @@ export default function HackathonList({ initialCerts }: { initialCerts: Cert[] }
                 <p className="text-white text-sm font-medium flex-1 line-clamp-2">{cert.title}</p>
                 <div className="flex items-center gap-1 shrink-0">
                   <Link
-                    href={`/admin/hackathons/${cert._id}/edit`}
+                    href={`/adminprivateatuljha123/hackathons/${cert._id}/edit`}
                     className="p-1.5 rounded-lg text-slate-500 hover:text-blue-400 hover:bg-blue-500/10 transition-all"
                   >
                     <Pencil className="w-3.5 h-3.5" />

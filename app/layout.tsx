@@ -51,20 +51,20 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${dancingScript.variable}`}>
-      <body className="bg-[#080C18] text-slate-200 antialiased selection:bg-violet-600/40 selection:text-white">
+      <body className="bg-[#07050E] text-slate-100 antialiased selection:bg-purple-600/40 selection:text-amber-300">
         {children}
         <Toaster
           position="bottom-right"
           toastOptions={{
             style: {
-              background: '#0D1424',
-              color: '#e2e8f0',
-              border: '1px solid rgba(139, 92, 246, 0.25)',
-              borderRadius: '0.875rem',
+              background: '#0E0B19',
+              color: '#F8FAFC',
+              border: '1px solid rgba(147, 51, 234, 0.3)',
+              borderRadius: '1rem',
               fontSize: '0.875rem',
             },
-            success: { iconTheme: { primary: '#8b5cf6', secondary: '#0D1424' } },
-            error:   { iconTheme: { primary: '#ef4444', secondary: '#0D1424' } },
+            success: { iconTheme: { primary: '#F59E0B', secondary: '#0E0B19' } },
+            error:   { iconTheme: { primary: '#EF4444', secondary: '#0E0B19' } },
           }}
         />
       </body>

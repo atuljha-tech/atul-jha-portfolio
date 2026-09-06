@@ -44,22 +44,22 @@ export default function Contact({ settings }: ContactProps) {
   }
 
   const socials = [
-    settings.githubUrl   && { icon: Github,   href: settings.githubUrl,   label: 'GitHub',   color: 'hover:border-violet-500/40 hover:text-violet-300' },
-    settings.linkedinUrl && { icon: Linkedin,  href: settings.linkedinUrl, label: 'LinkedIn', color: 'hover:border-blue-500/40 hover:text-blue-300'   },
-    settings.twitterUrl  && { icon: Twitter,   href: settings.twitterUrl,  label: 'Twitter',  color: 'hover:border-sky-500/40 hover:text-sky-300'     },
+    settings.githubUrl   && { icon: Github,   href: settings.githubUrl,   label: 'GITHUB',   color: 'hover:border-amber-400/50 hover:text-amber-400' },
+    settings.linkedinUrl && { icon: Linkedin,  href: settings.linkedinUrl, label: 'LINKEDIN', color: 'hover:border-purple-400/50 hover:text-purple-300' },
+    settings.twitterUrl  && { icon: Twitter,   href: settings.twitterUrl,  label: 'TWITTER',  color: 'hover:border-amber-400/50 hover:text-amber-300' },
   ].filter(Boolean) as { icon: React.ElementType; href: string; label: string; color: string }[]
 
   const inputClass = (field: string) =>
-    `w-full px-4 py-3.5 rounded-xl bg-white/3 border text-white text-sm placeholder-slate-600 outline-none transition-all duration-200 ${
+    `w-full px-5 py-4 rounded-2xl bg-[#130F23] border text-white text-xs font-mono placeholder-slate-500 outline-none transition-all duration-300 ${
       focused === field
-        ? 'border-violet-500/60 bg-violet-500/5 shadow-[0_0_0_3px_rgba(139,92,246,0.1)]'
-        : 'border-white/8 hover:border-white/15'
+        ? 'border-amber-400 bg-purple-950/20 shadow-[0_0_15px_rgba(245,158,11,0.15)]'
+        : 'border-purple-500/25 hover:border-purple-500/40'
     }`
 
   return (
-    <section ref={ref} id="contact" className="section-base">
-      <div className="glow-orb w-96 h-96 bg-violet-600/10 top-0 -left-20 pointer-events-none" />
-      <div className="glow-orb w-80 h-80 bg-pink-600/10 bottom-0 -right-20 pointer-events-none" />
+    <section ref={ref} id="contact" className="section-base bg-[#07050E]">
+      <div className="bg-glow-purple w-[550px] h-[550px] top-0 -left-20" />
+      <div className="bg-glow-gold w-[450px] h-[450px] bottom-0 -right-20" />
 
       <div className="relative z-10 max-w-6xl mx-auto">
         {/* Header */}
@@ -67,43 +67,44 @@ export default function Contact({ settings }: ContactProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-center mb-14"
+          className="text-center mb-16"
         >
-          <span className="section-label">Connect</span>
-          <h2 className="section-heading mb-4" style={{ fontFamily: 'var(--font-heading)' }}>
-            Get in{' '}
-            <span className="bg-linear-to-r from-blue-400 via-violet-400 to-pink-400 text-transparent bg-clip-text animate-gradient">
-              Touch
+          <span className="section-label">INITIATE COLLABORATION</span>
+          <h2 className="section-heading mb-3">
+            GET IN{' '}
+            <span className="text-gold-gradient">
+              TOUCH
             </span>
           </h2>
-          <p className="text-slate-500 max-w-md mx-auto text-sm">
-            Have a project in mind or want to collaborate? I'd love to hear from you.
+          <p className="text-slate-400 max-w-md mx-auto text-xs font-mono tracking-wider uppercase">
+            HAVE A PROJECT IN MIND OR WANT TO DISCUSS COLLABORATION? SEND A DIRECT MESSAGE.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-[1fr_380px] gap-8">
+        <div className="grid lg:grid-cols-12 gap-8">
 
-          {/* Form */}
+          {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: -24 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.15 }}
+            className="lg:col-span-7"
           >
-            <div className="relative rounded-2xl border border-white/6 bg-[#0D1424] overflow-hidden">
-              <div className="h-[2px] bg-linear-to-r from-blue-500 via-violet-500 to-pink-500" />
-              <div className="p-7">
-                <h3 className="text-white font-bold text-lg mb-1 flex items-center gap-2" style={{ fontFamily: 'var(--font-heading)' }}>
-                  <Send className="w-4 h-4 text-violet-400" />
-                  Send a Message
+            <div className="relative rounded-3xl border border-purple-500/25 bg-[#0E0B19] overflow-hidden shadow-2xl shadow-black">
+              <div className="h-1 bg-linear-to-r from-amber-400 via-purple-600 to-amber-500" />
+              <div className="p-8">
+                <h3 className="text-white font-black text-xl mb-1 uppercase tracking-tight flex items-center gap-2.5">
+                  <Send className="w-5 h-5 text-amber-400" />
+                  SEND A MESSAGE
                 </h3>
-                <p className="text-slate-500 text-xs mb-6">I typically respond within 24 hours</p>
+                <p className="text-purple-300 text-xs font-mono tracking-wider uppercase mb-8">TYPICAL RESPONSE TIME WITHIN 24 HOURS</p>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="grid sm:grid-cols-2 gap-4">
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="grid sm:grid-cols-2 gap-5">
                     <div>
-                      <label className="block text-xs font-medium text-slate-400 mb-1.5">Your Name</label>
+                      <label className="block text-[10px] font-mono font-bold text-amber-400/90 uppercase tracking-widest mb-2">YOUR NAME</label>
                       <input
-                        type="text" placeholder="Atul Jha"
+                        type="text" placeholder="ATUL JHA"
                         value={form.name}
                         onChange={e => setForm({ ...form, name: e.target.value })}
                         onFocus={() => setFocused('name')}
@@ -112,9 +113,9 @@ export default function Contact({ settings }: ContactProps) {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-slate-400 mb-1.5">Email Address</label>
+                      <label className="block text-[10px] font-mono font-bold text-amber-400/90 uppercase tracking-widest mb-2">EMAIL ADDRESS</label>
                       <input
-                        type="email" placeholder="you@example.com"
+                        type="email" placeholder="YOU@EXAMPLE.COM"
                         value={form.email}
                         onChange={e => setForm({ ...form, email: e.target.value })}
                         onFocus={() => setFocused('email')}
@@ -124,9 +125,9 @@ export default function Contact({ settings }: ContactProps) {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-slate-400 mb-1.5">Message</label>
+                    <label className="block text-[10px] font-mono font-bold text-amber-400/90 uppercase tracking-widest mb-2">MESSAGE DETAILS</label>
                     <textarea
-                      placeholder="Tell me about your project or idea..."
+                      placeholder="TELL ME ABOUT YOUR PROJECT OR IDEA..."
                       rows={5} value={form.message}
                       onChange={e => setForm({ ...form, message: e.target.value })}
                       onFocus={() => setFocused('message')}
@@ -136,14 +137,14 @@ export default function Contact({ settings }: ContactProps) {
                   </div>
                   <button
                     type="submit" disabled={sending || sent}
-                    className="w-full py-3.5 rounded-xl font-semibold text-sm text-white flex items-center justify-center gap-2 transition-all duration-200 disabled:opacity-60 relative overflow-hidden group"
+                    className="w-full py-4 rounded-full font-mono text-xs font-bold tracking-widest uppercase text-white flex items-center justify-center gap-2 transition-all duration-300 disabled:opacity-60 relative overflow-hidden group shadow-xl shadow-purple-950/60 border border-amber-400/40 cursor-pointer"
                   >
-                    <div className="absolute inset-0 bg-linear-to-r from-blue-500 via-violet-500 to-pink-500" />
-                    <div className="absolute inset-0 bg-linear-to-r from-blue-600 via-violet-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute inset-0 bg-linear-to-r from-amber-500 via-purple-600 to-purple-800" />
+                    <div className="absolute inset-0 bg-linear-to-r from-amber-600 via-purple-700 to-purple-900 opacity-0 group-hover:opacity-100 transition-opacity" />
                     <span className="relative flex items-center gap-2">
-                      {sent ? <><CheckCircle className="w-4 h-4" /> Sent!</>
-                        : sending ? <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full spinner" /> Sending...</>
-                        : <><Send className="w-4 h-4" /> Send Message</>}
+                      {sent ? <><CheckCircle className="w-4 h-4 text-amber-300" /> MESSAGE TRANSMITTED!</>
+                        : sending ? <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> TRANSMITTING...</>
+                        : <><Send className="w-4 h-4 text-amber-300" /> SEND MESSAGE</>}
                     </span>
                   </button>
                 </form>
@@ -151,70 +152,70 @@ export default function Contact({ settings }: ContactProps) {
             </div>
           </motion.div>
 
-          {/* Info panel */}
+          {/* Info Side Panel */}
           <motion.div
             initial={{ opacity: 0, x: 24 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.25 }}
-            className="space-y-4"
+            className="lg:col-span-5 space-y-4"
           >
-            {/* Availability badge */}
-            <div className="flex items-center gap-3 p-4 rounded-2xl bg-emerald-500/8 border border-emerald-500/20">
+            {/* Availability Status */}
+            <div className="flex items-center gap-4 p-5 rounded-3xl bg-[#0E0B19] border border-amber-500/30 shadow-xl">
               <div className="relative">
-                <div className="w-3 h-3 bg-emerald-500 rounded-full" />
-                <div className="absolute inset-0 w-3 h-3 bg-emerald-500 rounded-full animate-ping opacity-40" />
+                <div className="w-3.5 h-3.5 bg-emerald-400 rounded-full" />
+                <div className="absolute inset-0 w-3.5 h-3.5 bg-emerald-400 rounded-full animate-ping opacity-40" />
               </div>
               <div>
-                <p className="text-emerald-400 text-sm font-semibold">Open for Opportunities</p>
-                <p className="text-emerald-600 text-xs">Internships, freelance & collaborations</p>
+                <p className="text-amber-300 text-xs font-mono font-bold uppercase tracking-wider">OPEN FOR OPPORTUNITIES</p>
+                <p className="text-slate-400 text-xs mt-0.5">INTERNSHIPS, CONTRACTS & FULL-STACK ROLES</p>
               </div>
             </div>
 
-            {/* Email */}
+            {/* Direct Email Card */}
             {settings.email && (
-              <div className="p-5 rounded-2xl border border-white/6 bg-[#0D1424]">
+              <div className="p-6 rounded-3xl border border-purple-500/25 bg-[#0E0B19] shadow-xl">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-                      <Mail className="w-4 h-4 text-blue-400" />
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-11 h-11 rounded-2xl bg-[#130F23] border border-purple-500/30 flex items-center justify-center">
+                      <Mail className="w-5 h-5 text-amber-400" />
                     </div>
                     <div>
-                      <p className="text-[10px] font-mono text-slate-600 uppercase tracking-wider mb-0.5">Email</p>
-                      <p className="text-white text-sm font-medium">{settings.email}</p>
+                      <p className="text-[10px] font-mono text-amber-400/90 uppercase tracking-widest mb-0.5">DIRECT EMAIL</p>
+                      <p className="text-white text-xs font-mono font-bold">{settings.email}</p>
                     </div>
                   </div>
                   <button onClick={copyEmail}
-                    className="w-8 h-8 rounded-lg bg-white/5 border border-white/8 flex items-center justify-center hover:border-violet-500/40 transition-colors">
-                    {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5 text-slate-500" />}
+                    className="w-9 h-9 rounded-xl bg-[#130F23] border border-purple-500/30 flex items-center justify-center hover:border-amber-400 transition-colors text-amber-400">
+                    {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
                   </button>
                 </div>
               </div>
             )}
 
-            {/* Location */}
+            {/* Location Card */}
             {settings.location && (
-              <div className="p-5 rounded-2xl border border-white/6 bg-[#0D1424]">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center">
-                    <MapPin className="w-4 h-4 text-pink-400" />
+              <div className="p-6 rounded-3xl border border-purple-500/25 bg-[#0E0B19] shadow-xl">
+                <div className="flex items-center gap-3.5">
+                  <div className="w-11 h-11 rounded-2xl bg-[#130F23] border border-purple-500/30 flex items-center justify-center">
+                    <MapPin className="w-5 h-5 text-purple-400" />
                   </div>
                   <div>
-                    <p className="text-[10px] font-mono text-slate-600 uppercase tracking-wider mb-0.5">Location</p>
-                    <p className="text-white text-sm font-medium">{settings.location}</p>
+                    <p className="text-[10px] font-mono text-amber-400/90 uppercase tracking-widest mb-0.5">LOCATION</p>
+                    <p className="text-white text-xs font-mono font-bold">{settings.location}</p>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* Socials */}
+            {/* Social Triggers */}
             {socials.length > 0 && (
-              <div className="p-5 rounded-2xl border border-white/6 bg-[#0D1424]">
-                <p className="text-[10px] font-mono text-slate-600 uppercase tracking-wider mb-3">Find me on</p>
-                <div className="flex gap-2">
+              <div className="p-6 rounded-3xl border border-purple-500/25 bg-[#0E0B19] shadow-xl">
+                <p className="text-[10px] font-mono text-amber-400/90 uppercase tracking-widest mb-3">SOCIAL PROFILES</p>
+                <div className="flex flex-wrap gap-2.5">
                   {socials.map(({ icon: Icon, href, label, color }) => (
                     <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-                      className={`flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/3 border border-white/8 text-slate-400 text-xs font-medium transition-all duration-200 ${color}`}>
-                      <Icon className="w-3.5 h-3.5" /> {label}
+                      className={`flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#130F23] border border-purple-500/30 text-slate-300 text-xs font-mono font-semibold transition-all duration-300 ${color}`}>
+                      <Icon className="w-4 h-4" /> {label}
                     </a>
                   ))}
                 </div>

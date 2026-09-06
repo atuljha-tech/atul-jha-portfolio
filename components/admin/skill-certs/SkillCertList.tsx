@@ -103,7 +103,7 @@ export default function SkillCertList({ initialCerts }: { initialCerts: Cert[] }
                 </div>
                 <div className="flex items-center gap-1 shrink-0">
                   <Link
-                    href={`/admin/skill-certificates/${cert._id}/edit`}
+                    href={`/adminprivateatuljha123/skill-certificates/${cert._id}/edit`}
                     className="p-1.5 rounded-lg text-slate-500 hover:text-blue-400 hover:bg-blue-500/10 transition-all"
                   >
                     <Pencil className="w-4 h-4" />

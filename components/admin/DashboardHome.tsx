@@ -18,7 +18,7 @@ export default function DashboardHome({ stats }: Props) {
       label: 'Hackathon Certificates',
       value: stats.hackathons,
       icon: Trophy,
-      href: '/admin/hackathons',
+      href: '/adminprivateatuljha123/hackathons',
       gradient: 'from-yellow-500 to-orange-500',
       bg: 'from-yellow-500/10 to-orange-500/10',
     },
@@ -26,7 +26,7 @@ export default function DashboardHome({ stats }: Props) {
       label: 'Projects',
       value: stats.projects,
       icon: Briefcase,
-      href: '/admin/projects',
+      href: '/adminprivateatuljha123/projects',
       gradient: 'from-blue-500 to-purple-500',
       bg: 'from-blue-500/10 to-purple-500/10',
     },
@@ -34,7 +34,7 @@ export default function DashboardHome({ stats }: Props) {
       label: 'Skill Certificates',
       value: stats.skillCerts,
       icon: Award,
-      href: '/admin/skill-certificates',
+      href: '/adminprivateatuljha123/skill-certificates',
       gradient: 'from-green-500 to-teal-500',
       bg: 'from-green-500/10 to-teal-500/10',
     },
@@ -42,17 +42,17 @@ export default function DashboardHome({ stats }: Props) {
       label: 'Skills Learned',
       value: stats.skills,
       icon: Code2,
-      href: '/admin/skills',
+      href: '/adminprivateatuljha123/skills',
       gradient: 'from-purple-500 to-pink-500',
       bg: 'from-purple-500/10 to-pink-500/10',
     },
   ]
 
   const quickLinks = [
-    { label: 'Add Hackathon Certificate', href: '/admin/hackathons/new', icon: Trophy },
-    { label: 'Add Project', href: '/admin/projects/new', icon: Briefcase },
-    { label: 'Add Skill Certificate', href: '/admin/skill-certificates/new', icon: Award },
-    { label: 'Add Skill', href: '/admin/skills/new', icon: Code2 },
+    { label: 'Add Hackathon Certificate', href: '/adminprivateatuljha123/hackathons/new', icon: Trophy },
+    { label: 'Add Project', href: '/adminprivateatuljha123/projects/new', icon: Briefcase },
+    { label: 'Add Skill Certificate', href: '/adminprivateatuljha123/skill-certificates/new', icon: Award },
+    { label: 'Add Skill', href: '/adminprivateatuljha123/skills/new', icon: Code2 },
   ]
 
   return (

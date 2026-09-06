@@ -33,6 +33,13 @@ function stripImage<T extends { image?: string }>(item: T): T {
   } as T
 }
 
+import {
+  fallbackProjects,
+  fallbackSkillCerts,
+  fallbackHackathonCerts,
+  fallbackSkills,
+} from '@/lib/fallbackData'
+
 async function getData() {
   try {
     await connectDB()
@@ -61,17 +68,26 @@ async function getData() {
         .lean(),
     ])
 
+    const cleanedProjects = (projects || []).map(stripImage)
+    const cleanedHackathonCerts = (hackathonCerts || []).map(stripImage)
+    const cleanedSkillCerts = (skillCerts || []).map(stripImage)
+
     return {
       settings: settings || {},
-      // Strip base64 from projects and certs — load images lazily
-      projects: (projects || []).map(stripImage),
-      hackathonCerts: (hackathonCerts || []).map(stripImage),
-      skillCerts: (skillCerts || []).map(stripImage),
-      skills: skills || [],
+      projects: cleanedProjects.length > 0 ? cleanedProjects : fallbackProjects,
+      hackathonCerts: cleanedHackathonCerts.length > 0 ? cleanedHackathonCerts : fallbackHackathonCerts,
+      skillCerts: cleanedSkillCerts.length > 0 ? cleanedSkillCerts : fallbackSkillCerts,
+      skills: (skills && skills.length > 0) ? skills : fallbackSkills,
     }
   } catch (error) {
     console.error('Failed to fetch data:', error)
-    return { settings: {}, projects: [], hackathonCerts: [], skillCerts: [], skills: [] }
+    return {
+      settings: {},
+      projects: fallbackProjects,
+      hackathonCerts: fallbackHackathonCerts,
+      skillCerts: fallbackSkillCerts,
+      skills: fallbackSkills,
+    }
   }
 }
 

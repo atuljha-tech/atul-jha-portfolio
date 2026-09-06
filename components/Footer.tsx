@@ -8,7 +8,7 @@ interface FooterProps {
 }
 
 export default function Footer({ settings }: FooterProps) {
-  const [year, setYear] = useState(2025)
+  const [year, setYear] = useState(2026)
   useEffect(() => { setYear(new Date().getFullYear()) }, [])
 
   const socials = [
@@ -19,46 +19,51 @@ export default function Footer({ settings }: FooterProps) {
   ].filter(Boolean) as { icon: React.ElementType; href: string; label: string }[]
 
   return (
-    <footer className="relative bg-[#060A14] border-t border-white/5 py-10 overflow-hidden">
-      {/* Top gradient line */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-violet-500/30 to-transparent" />
+    <footer className="relative bg-[#07050E] border-t border-purple-500/20 py-12 overflow-hidden">
+      {/* Top Gradient Accent Line */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-amber-400/40 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
 
-          {/* Brand */}
-          <span
-            className="text-xl font-bold bg-linear-to-r from-blue-400 via-violet-400 to-pink-400 text-transparent bg-clip-text"
-            style={{ fontFamily: 'var(--font-dancing), cursive' }}
-          >
-            {settings.heroName || 'Atul Jha'}
-          </span>
-
-          {/* Socials */}
+          {/* Brand Mark */}
           <div className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-lg bg-linear-to-br from-purple-600 to-amber-500 p-0.5 flex items-center justify-center">
+              <div className="w-full h-full bg-[#07050E] rounded-[6px] flex items-center justify-center">
+                <span className="text-amber-400 text-[10px] font-black tracking-tighter">AJ</span>
+              </div>
+            </div>
+            <span className="text-base font-black tracking-wider text-white uppercase">
+              {settings.heroName?.toUpperCase() || 'ATUL JHA'}
+              <span className="text-amber-400">.</span>
+            </span>
+          </div>
+
+          {/* Social Links */}
+          <div className="flex items-center gap-2.5">
             {socials.map(({ icon: Icon, href, label }) => (
               <a key={label} href={href}
                 target={href.startsWith('mailto') ? undefined : '_blank'}
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="w-9 h-9 rounded-xl bg-white/4 border border-white/6 flex items-center justify-center text-slate-500 hover:text-white hover:border-violet-500/40 transition-all duration-200 hover:-translate-y-0.5"
+                className="w-10 h-10 rounded-full bg-[#0E0B19] border border-purple-500/25 flex items-center justify-center text-slate-400 hover:text-amber-400 hover:border-amber-400/50 transition-all duration-300 hover:-translate-y-0.5"
               >
-                <Icon className="w-3.5 h-3.5" />
+                <Icon className="w-4 h-4" />
               </a>
             ))}
           </div>
 
-          {/* Right */}
+          {/* Copyright & Scroll to Top */}
           <div className="flex items-center gap-4">
-            <p className="text-xs text-slate-600 flex items-center gap-1">
-              © {year} {settings.heroName || 'Atul Jha'} · Made with <Heart className="w-3 h-3 text-pink-500 animate-pulse" /> in India
+            <p className="text-xs font-mono text-slate-400 flex items-center gap-1.5 uppercase">
+              © {year} {settings.heroName?.toUpperCase() || 'ATUL JHA'} · BUILT WITH <Heart className="w-3.5 h-3.5 text-amber-400 fill-amber-400 animate-pulse" /> IN INDIA
             </p>
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="w-8 h-8 rounded-xl bg-white/4 border border-white/6 flex items-center justify-center text-slate-500 hover:text-white hover:border-violet-500/40 transition-all duration-200 hover:-translate-y-0.5"
+              className="w-9 h-9 rounded-full bg-[#0E0B19] border border-purple-500/30 flex items-center justify-center text-amber-400 hover:border-amber-400 transition-all duration-300 hover:-translate-y-0.5 cursor-pointer"
               aria-label="Back to top"
             >
-              <ArrowUp className="w-3.5 h-3.5" />
+              <ArrowUp className="w-4 h-4" />
             </button>
           </div>
         </div>

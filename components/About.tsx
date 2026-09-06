@@ -4,7 +4,7 @@ import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
 import {
   GraduationCap, MapPin, Mail, Github, Linkedin,
-  Cpu, Globe, Code2, Rocket
+  Cpu, Globe, Code2, Rocket, Award, ShieldCheck
 } from 'lucide-react'
 
 interface AboutProps {
@@ -23,18 +23,18 @@ interface AboutProps {
 }
 
 const interests = [
-  { icon: Cpu,    label: 'Blockchain & Web3' },
-  { icon: Globe,  label: 'Full Stack Dev'    },
-  { icon: Code2,  label: 'Open Source'       },
-  { icon: Rocket, label: 'IoT & Embedded'    },
+  { icon: Cpu,    label: 'BLOCKCHAIN & WEB3' },
+  { icon: Globe,  label: 'FULL STACK DEV'    },
+  { icon: Code2,  label: 'OPEN SOURCE'       },
+  { icon: Rocket, label: 'IOT & EMBEDDED'    },
 ]
 
 export default function About({ settings }: AboutProps) {
   const ref  = useRef(null)
   const inView = useInView(ref, { once: true, amount: 0.2 })
 
-  const name  = settings.heroName  || 'Atul Jha'
-  const title = settings.heroTitle || 'Full Stack Developer'
+  const name  = settings.heroName  || 'ATUL JHA'
+  const title = settings.heroTitle || 'FULL STACK DEVELOPER'
   const about = settings.aboutText ||
     'Computer Science student at Heritage Institute of Technology with a passion for emerging technologies. I thrive on building innovative solutions that combine creativity with technical excellence.'
 
@@ -42,152 +42,147 @@ export default function About({ settings }: AboutProps) {
     <section
       ref={ref}
       id="about"
-      className="relative py-24 px-6 overflow-hidden bg-[#0A0F1C]"
+      className="relative py-28 px-6 overflow-hidden bg-[#07050E]"
     >
-      {/* subtle background glow */}
+      {/* Background Lighting */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-32 left-1/3 w-[500px] h-[500px] bg-purple-700/8 rounded-full blur-3xl" />
-        <div className="absolute -bottom-32 right-1/3 w-[500px] h-[500px] bg-blue-700/8 rounded-full blur-3xl" />
+        <div className="bg-glow-purple w-[550px] h-[550px] top-1/4 -left-32" />
+        <div className="bg-glow-gold w-[450px] h-[450px] bottom-1/4 -right-32" />
       </div>
 
-      <div className="relative z-10 max-w-4xl mx-auto">
+      <div className="relative z-10 max-w-5xl mx-auto">
 
-        {/* ── label ── */}
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-          className="text-center text-xs font-mono tracking-[0.3em] text-purple-400 mb-5 uppercase"
-        >
-          About Me
-        </motion.p>
-
-        {/* ── heading ── */}
-        <motion.h2
+        {/* Section Label & Heading */}
+        <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.55, delay: 0.05 }}
-          className="text-center text-5xl md:text-6xl font-black text-white mb-16 leading-tight"
+          transition={{ duration: 0.55 }}
+          className="text-center mb-16"
         >
-          Who I{' '}
-          <span className="bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text animate-gradient">
-            Am
-          </span>
-        </motion.h2>
+          <span className="section-label">BACKGROUND & VISION</span>
+          <h2 className="section-heading mt-2">
+            WHO I{' '}
+            <span className="text-gold-gradient">
+              AM
+            </span>
+          </h2>
+        </motion.div>
 
-        {/* ── main card ── */}
+        {/* Main Card Container inspired by DIGITAL TRUST layout in reference image */}
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.65, delay: 0.1 }}
           className="relative"
         >
-          {/* glow border on hover */}
-          <div className="absolute -inset-px rounded-3xl bg-linear-to-br from-blue-500/25 via-purple-500/15 to-pink-500/25 opacity-0 hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+          {/* Subtle Ambient Hover Glow */}
+          <div className="absolute -inset-px rounded-[2rem] bg-linear-to-r from-amber-500/30 via-purple-600/30 to-amber-500/30 opacity-60 blur-md pointer-events-none" />
 
-          <div className="relative bg-[#0D1424] rounded-3xl border border-slate-800/60 overflow-hidden">
-            {/* top colour bar */}
-            <div className="h-[3px] bg-linear-to-r from-blue-500 via-purple-500 to-pink-500" />
+          <div className="relative bg-[#0E0B19] rounded-[2rem] border border-purple-500/25 overflow-hidden shadow-2xl shadow-black">
+            {/* Top Golden & Purple Gradient Accent Bar */}
+            <div className="h-1 bg-linear-to-r from-amber-400 via-purple-600 to-amber-500" />
 
-            <div className="p-8 md:p-10 grid md:grid-cols-[1fr_auto] gap-10">
+            <div className="p-8 md:p-12 grid md:grid-cols-12 gap-10">
 
-              {/* ── left: bio + interests ── */}
-              <div className="space-y-8">
+              {/* Left Column: Bio & Core Interests */}
+              <div className="md:col-span-7 space-y-8">
 
-                {/* name + role */}
                 <div>
-                  <h3 className="text-2xl font-black text-white tracking-tight">{name}</h3>
-                  <p className="text-purple-400 text-sm font-medium mt-1">{title}</p>
+                  <div className="flex items-center gap-2 mb-1">
+                    <ShieldCheck className="w-4 h-4 text-amber-400" />
+                    <span className="text-xs font-mono tracking-widest text-amber-400 uppercase">CS UNDERGRADUATE</span>
+                  </div>
+                  <h3 className="text-3xl font-black text-white tracking-tight uppercase">{name}</h3>
+                  <p className="text-purple-300 text-xs font-mono tracking-wider mt-1">{title}</p>
                 </div>
 
-                {/* bio */}
-                <p className="text-slate-400 leading-[1.85] text-[15px] border-l-[3px] border-purple-500/40 pl-5">
+                <p className="text-slate-300 leading-relaxed text-sm md:text-base border-l-2 border-amber-400/80 pl-5 bg-purple-950/20 py-3 rounded-r-2xl">
                   {about}
                 </p>
 
-                {/* interests */}
+                {/* Core Focus Tags */}
                 <div>
-                  <p className="text-[11px] font-mono text-slate-600 tracking-[0.2em] uppercase mb-3">
-                    Interests
+                  <p className="text-[10px] font-mono text-amber-400/90 tracking-[0.25em] uppercase mb-3">
+                    CORE FOCUS AREAS
                   </p>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2.5">
                     {interests.map(({ icon: Icon, label }) => (
                       <span
                         key={label}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-800/60 border border-slate-700/50 text-xs text-slate-300 hover:border-purple-500/40 hover:text-white transition-all"
+                        className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#130F23] border border-purple-500/20 text-xs font-mono text-slate-200 hover:border-amber-400/50 transition-all"
                       >
-                        <Icon className="w-3 h-3 text-purple-400" />
+                        <Icon className="w-3.5 h-3.5 text-amber-400" />
                         {label}
                       </span>
                     ))}
                   </div>
                 </div>
 
-                {/* social buttons */}
-                <div className="flex gap-2 pt-1">
+                {/* Social Quick Triggers */}
+                <div className="flex gap-3 pt-2">
                   {settings.githubUrl && (
                     <a
                       href={settings.githubUrl}
                       target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800/60 border border-slate-700/50 text-xs text-slate-300 hover:text-white hover:border-purple-500/50 transition-all"
+                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#130F23] border border-purple-500/30 text-xs font-mono text-slate-200 hover:text-amber-400 hover:border-amber-400/50 transition-all shadow-md"
                     >
-                      <Github className="w-3.5 h-3.5" /> GitHub
+                      <Github className="w-4 h-4 text-amber-400" /> GITHUB
                     </a>
                   )}
                   {settings.linkedinUrl && (
                     <a
                       href={settings.linkedinUrl}
                       target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800/60 border border-slate-700/50 text-xs text-slate-300 hover:text-white hover:border-blue-500/50 transition-all"
+                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#130F23] border border-purple-500/30 text-xs font-mono text-slate-200 hover:text-amber-400 hover:border-amber-400/50 transition-all shadow-md"
                     >
-                      <Linkedin className="w-3.5 h-3.5" /> LinkedIn
+                      <Linkedin className="w-4 h-4 text-purple-400" /> LINKEDIN
                     </a>
                   )}
                 </div>
               </div>
 
-              {/* ── right: info strip ── */}
-              <div className="flex md:flex-col gap-3 flex-wrap md:min-w-[180px]">
+              {/* Right Column: Info Grid Cards */}
+              <div className="md:col-span-5 flex flex-col gap-3 justify-center">
                 {[
                   {
                     icon: GraduationCap,
-                    color: 'text-purple-400',
-                    bg: 'bg-purple-500/10 border-purple-500/20',
-                    label: 'College',
+                    color: 'text-amber-400',
+                    bg: 'bg-[#130F23] border-purple-500/25',
+                    label: 'COLLEGE',
                     value: settings.college || 'Heritage Institute of Technology',
                   },
                   {
                     icon: MapPin,
-                    color: 'text-pink-400',
-                    bg: 'bg-pink-500/10 border-pink-500/20',
-                    label: 'Location',
+                    color: 'text-purple-400',
+                    bg: 'bg-[#130F23] border-purple-500/25',
+                    label: 'LOCATION',
                     value: settings.location || 'Kolkata, India',
                   },
                   {
                     icon: Mail,
-                    color: 'text-blue-400',
-                    bg: 'bg-blue-500/10 border-blue-500/20',
-                    label: 'Email',
+                    color: 'text-amber-400',
+                    bg: 'bg-[#130F23] border-purple-500/25',
+                    label: 'PRIMARY EMAIL',
                     value: settings.email || '—',
                   },
                   {
-                    icon: GraduationCap,
-                    color: 'text-emerald-400',
-                    bg: 'bg-emerald-500/10 border-emerald-500/20',
-                    label: 'CGPA',
-                    value: `${settings.cgpa || '8.9'} · ${settings.batch || '2024–28'}`,
+                    icon: Award,
+                    color: 'text-purple-400',
+                    bg: 'bg-[#130F23] border-purple-500/25',
+                    label: 'ACADEMIC SCORE & BATCH',
+                    value: `CGPA ${settings.cgpa || '8.9'} · BATCH ${settings.batch || '2024–28'}`,
                   },
                 ].map(({ icon: Icon, color, bg, label, value }) => (
                   <div
                     key={label}
-                    className={`flex items-start gap-3 p-3.5 rounded-2xl border ${bg} min-w-[160px] md:min-w-0`}
+                    className={`flex items-start gap-3.5 p-4 rounded-2xl border ${bg} hover:border-amber-400/40 transition-all duration-300 shadow-md`}
                   >
-                    <div className={`mt-0.5 shrink-0 ${color}`}>
+                    <div className={`mt-1 shrink-0 ${color}`}>
                       <Icon className="w-4 h-4" />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-[10px] font-mono text-slate-600 uppercase tracking-wider">{label}</p>
-                      <p className="text-xs text-slate-300 font-medium mt-0.5 break-words leading-snug">{value}</p>
+                      <p className="text-[10px] font-mono text-amber-400/90 uppercase tracking-widest">{label}</p>
+                      <p className="text-xs text-slate-200 font-semibold mt-0.5 break-words">{value}</p>
                     </div>
                   </div>
                 ))}

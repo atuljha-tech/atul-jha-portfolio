@@ -39,12 +39,10 @@ export default function SkillCertificates({ certificates }: Props) {
     <section
       ref={ref}
       id="skill-certs"
-      className="relative py-24 px-6 overflow-hidden bg-linear-to-b from-[#0A0F1C] via-[#0D1424] to-[#0A0F1C]"
+      className="relative py-28 px-6 overflow-hidden bg-[#07050E]"
     >
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 -left-20 w-80 h-80 bg-green-600/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 -right-20 w-80 h-80 bg-teal-600/5 rounded-full blur-3xl" />
-      </div>
+      <div className="bg-glow-purple w-[500px] h-[500px] top-10 -left-20" />
+      <div className="bg-glow-gold w-[450px] h-[450px] bottom-10 -right-20" />
 
       <div className="relative z-10 max-w-7xl mx-auto">
         {/* Header */}
@@ -54,15 +52,15 @@ export default function SkillCertificates({ certificates }: Props) {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-xs font-mono tracking-widest text-green-400 mb-4 block">LEARNING</span>
-          <h2 className="text-5xl md:text-6xl font-black text-white">
-            Skills{' '}
-            <span className="bg-linear-to-r from-green-400 via-teal-400 to-blue-400 text-transparent bg-clip-text">
-              Certificates
+          <span className="section-label">VERIFIED CREDENTIALS</span>
+          <h2 className="section-heading mb-3">
+            SKILL{' '}
+            <span className="text-gold-gradient">
+              CERTIFICATES
             </span>
           </h2>
-          <p className="text-slate-400 mt-4 max-w-xl mx-auto">
-            Verified credentials from top platforms and courses
+          <p className="text-slate-400 max-w-md mx-auto text-xs font-mono tracking-wider uppercase">
+            COURSES & PROFESSIONAL CREDENTIALS
           </p>
         </motion.div>
 
@@ -77,10 +75,9 @@ export default function SkillCertificates({ certificates }: Props) {
               onClick={() => (cert.image || cert.hasImage) && setSelected(index)}
               className={`group relative ${(cert.image || cert.hasImage) ? 'cursor-pointer' : ''}`}
             >
-              <div className="absolute -inset-0.5 bg-linear-to-r from-green-500/30 via-teal-500/30 to-blue-500/30 rounded-2xl opacity-0 group-hover:opacity-100 blur transition-opacity duration-500" />
-              <div className="relative bg-[#0D1424] rounded-2xl border border-slate-800/50 overflow-hidden hover:border-transparent transition-all duration-300">
+              <div className="relative bg-[#0E0B19] rounded-3xl border border-purple-500/25 overflow-hidden hover:border-amber-400/50 transition-all duration-400 shadow-2xl shadow-black">
                 {(cert.image || cert.hasImage) && !cert.image?.startsWith('data:application/pdf') ? (
-                  <div className="relative aspect-[3/2] overflow-hidden">
+                  <div className="relative aspect-3/2 overflow-hidden bg-[#130F23]">
                     <img
                       src={cert.image || `/api/image/skill-certs/${cert._id}`}
                       alt={cert.name}
@@ -88,26 +85,26 @@ export default function SkillCertificates({ certificates }: Props) {
                       decoding="async"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-linear-to-t from-[#0D1424] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <span className="px-3 py-1.5 bg-white/10 backdrop-blur-sm rounded-full text-xs text-white border border-white/20">
-                        View
+                    <div className="absolute inset-0 bg-linear-to-t from-[#0E0B19] via-transparent to-transparent opacity-60" />
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#07050E]/60 backdrop-blur-xs">
+                      <span className="px-4 py-2 bg-[#0E0B19] rounded-full text-xs font-mono font-bold tracking-wider text-amber-300 border border-amber-400/50 uppercase">
+                        VIEW CREDENTIAL
                       </span>
                     </div>
                   </div>
                 ) : (
-                  <div className="aspect-[4/3] bg-linear-to-br from-green-500/10 via-teal-500/10 to-blue-500/10 flex items-center justify-center">
-                    <Award className="w-10 h-10 text-green-400/40" />
+                  <div className="aspect-4/3 bg-[#130F23] flex items-center justify-center">
+                    <Award className="w-12 h-12 text-amber-400/40" />
                   </div>
                 )}
 
-                <div className="p-4">
-                  <h3 className="text-white font-semibold text-sm mb-1 line-clamp-2">{cert.name}</h3>
-                  <p className="text-green-400 text-xs mb-2">{cert.platform}</p>
-                  <div className="flex items-center justify-between">
+                <div className="p-6">
+                  <h3 className="text-white font-bold text-sm mb-1 uppercase tracking-tight line-clamp-2">{cert.name}</h3>
+                  <p className="text-amber-400 text-xs font-mono font-semibold mb-3 uppercase">{cert.platform}</p>
+                  <div className="flex items-center justify-between pt-3 border-t border-purple-500/20">
                     <div className="flex items-center gap-1.5">
-                      <Calendar className="w-3 h-3 text-slate-500" />
-                      <span className="text-xs text-slate-500">
+                      <Calendar className="w-3.5 h-3.5 text-purple-400" />
+                      <span className="text-xs font-mono text-slate-400">
                         {new Date(cert.date).toLocaleDateString('en-US', {
                           month: 'short',
                           year: 'numeric',
@@ -120,9 +117,9 @@ export default function SkillCertificates({ certificates }: Props) {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="text-teal-400 hover:text-teal-300 transition-colors"
+                        className="text-amber-400 hover:text-amber-300 transition-colors p-1"
                       >
-                        <ExternalLink className="w-3.5 h-3.5" />
+                        <ExternalLink className="w-4 h-4" />
                       </a>
                     )}
                   </div>
@@ -133,31 +130,31 @@ export default function SkillCertificates({ certificates }: Props) {
         </div>
       </div>
 
-      {/* Lightbox */}
+      {/* Lightbox Modal */}
       {selected !== null && (certificates[selected]?.image || certificates[selected]?.hasImage) && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/92 backdrop-blur-xl"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#07050E]/95 backdrop-blur-2xl"
           onClick={() => setSelected(null)}
         >
           <div className="relative w-full max-w-3xl" onClick={(e) => e.stopPropagation()}>
 
-            {/* Close */}
+            {/* Close Trigger */}
             <button
               onClick={() => setSelected(null)}
-              className="absolute -top-10 right-0 w-9 h-9 rounded-full bg-white/10 border border-white/15 flex items-center justify-center hover:bg-red-500/30 transition-colors z-10"
+              className="absolute -top-12 right-0 w-10 h-10 rounded-full bg-[#0E0B19] border border-amber-400/40 flex items-center justify-center hover:bg-red-500/20 transition-colors z-10 text-amber-400"
             >
-              <X className="w-4 h-4 text-white" />
+              <X className="w-5 h-5" />
             </button>
 
-            {/* Image container — natural height, no forced ratio */}
-            <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-[#0D1424] shadow-2xl shadow-black/60">
+            {/* Image Container */}
+            <div className="relative rounded-3xl overflow-hidden border border-purple-500/30 bg-[#0E0B19] shadow-2xl shadow-black">
               {(() => {
                 const imgSrc = certificates[selected].image || `/api/image/skill-certs/${certificates[selected]._id}`
                 return imgSrc.startsWith('data:application/pdf') ? (
                   <div className="flex flex-col items-center justify-center py-20 gap-4">
-                    <FileText className="w-16 h-16 text-red-400" />
-                    <a href={imgSrc} download className="px-4 py-2 bg-purple-500 rounded-xl text-white text-sm">
-                      Download PDF
+                    <FileText className="w-16 h-16 text-amber-400" />
+                    <a href={imgSrc} download className="px-6 py-2.5 bg-linear-to-r from-amber-500 to-purple-600 rounded-full text-white text-xs font-mono font-bold uppercase">
+                      DOWNLOAD PDF CREDENTIAL
                     </a>
                   </div>
                 ) : (
@@ -169,32 +166,32 @@ export default function SkillCertificates({ certificates }: Props) {
                 )
               })()}
 
-              {/* Prev */}
+              {/* Prev Trigger */}
               <button
                 onClick={handlePrev}
-                className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 border border-white/10 flex items-center justify-center hover:bg-purple-500/30 transition-colors"
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#0E0B19]/80 border border-purple-500/40 flex items-center justify-center hover:border-amber-400 text-white transition-colors"
               >
-                <ChevronLeft className="w-4 h-4 text-white" />
+                <ChevronLeft className="w-5 h-5" />
               </button>
 
-              {/* Next */}
+              {/* Next Trigger */}
               <button
                 onClick={handleNext}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 border border-white/10 flex items-center justify-center hover:bg-purple-500/30 transition-colors"
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#0E0B19]/80 border border-purple-500/40 flex items-center justify-center hover:border-amber-400 text-white transition-colors"
               >
-                <ChevronRight className="w-4 h-4 text-white" />
+                <ChevronRight className="w-5 h-5" />
               </button>
 
-              {/* Counter */}
-              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-black/60 backdrop-blur-sm rounded-full border border-white/10">
-                <span className="text-xs text-white">{selected + 1} / {certificates.length}</span>
+              {/* Counter Pill */}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-[#0E0B19]/90 backdrop-blur-md rounded-full border border-amber-400/40">
+                <span className="text-xs font-mono font-bold text-amber-300">{selected + 1} / {certificates.length}</span>
               </div>
             </div>
 
-            {/* Title below */}
+            {/* Title Details */}
             <div className="mt-4 text-center">
-              <p className="text-white font-semibold">{certificates[selected].name}</p>
-              <p className="text-slate-400 text-sm mt-0.5">{certificates[selected].platform}</p>
+              <p className="text-white font-bold uppercase text-base">{certificates[selected].name}</p>
+              <p className="text-amber-400 text-xs font-mono uppercase mt-0.5">{certificates[selected].platform}</p>
             </div>
           </div>
         </div>

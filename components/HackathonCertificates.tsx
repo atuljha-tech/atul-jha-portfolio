@@ -36,12 +36,10 @@ export default function HackathonCertificates({ certificates }: Props) {
     <section
       ref={ref}
       id="hackathons"
-      className="relative py-24 px-6 overflow-hidden bg-linear-to-b from-[#0A0F1C] via-[#0D1424] to-[#0A0F1C]"
+      className="relative py-28 px-6 overflow-hidden bg-[#07050E]"
     >
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 -left-20 w-80 h-80 bg-yellow-600/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 -right-20 w-80 h-80 bg-orange-600/5 rounded-full blur-3xl" />
-      </div>
+      <div className="bg-glow-purple w-[500px] h-[500px] top-10 -left-20" />
+      <div className="bg-glow-gold w-[450px] h-[450px] bottom-10 -right-20" />
 
       <div className="relative z-10 max-w-7xl mx-auto">
         {/* Header */}
@@ -51,19 +49,17 @@ export default function HackathonCertificates({ certificates }: Props) {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-xs font-mono tracking-widest text-yellow-400 mb-4 block">
-            ACHIEVEMENTS
-          </span>
-          <h2 className="text-5xl md:text-6xl font-black text-white">
-            Hackathon{' '}
-            <span className="bg-linear-to-r from-yellow-400 via-orange-400 to-pink-400 text-transparent bg-clip-text">
-              Certificates
+          <span className="section-label">COMPETITION HONORS</span>
+          <h2 className="section-heading mb-3">
+            HACKATHON{' '}
+            <span className="text-gold-gradient">
+              CERTIFICATES
             </span>
           </h2>
         </motion.div>
 
         {/* Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
           {certificates.map((cert, index) => (
             <motion.div
               key={cert._id}
@@ -73,11 +69,10 @@ export default function HackathonCertificates({ certificates }: Props) {
               onClick={() => (cert.image || cert.hasImage) && setSelected(index)}
               className={`group relative ${(cert.image || cert.hasImage) ? 'cursor-pointer' : ''}`}
             >
-              <div className="absolute -inset-0.5 bg-linear-to-r from-yellow-500/30 via-orange-500/30 to-pink-500/30 rounded-2xl opacity-0 group-hover:opacity-100 blur transition-opacity duration-500" />
-              <div className="relative bg-[#0D1424] rounded-2xl border border-slate-800/50 overflow-hidden hover:border-transparent transition-all duration-300">
+              <div className="relative bg-[#0E0B19] rounded-3xl border border-purple-500/25 overflow-hidden hover:border-amber-400/50 transition-all duration-400 shadow-2xl shadow-black">
                 {/* Image */}
                 {(cert.image || cert.hasImage) ? (
-                  <div className="relative aspect-[4/3] overflow-hidden">
+                  <div className="relative aspect-4/3 overflow-hidden bg-[#130F23]">
                     <img
                       src={cert.image || `/api/image/hackathons/${cert._id}`}
                       alt={cert.title}
@@ -85,22 +80,22 @@ export default function HackathonCertificates({ certificates }: Props) {
                       decoding="async"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-linear-to-t from-[#0D1424]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <span className="px-3 py-1.5 bg-white/10 backdrop-blur-sm rounded-full text-xs text-white border border-white/20">
-                        View
+                    <div className="absolute inset-0 bg-linear-to-t from-[#0E0B19]/80 via-transparent to-transparent opacity-60" />
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#07050E]/60 backdrop-blur-xs">
+                      <span className="px-3.5 py-1.5 bg-[#0E0B19] rounded-full text-xs font-mono font-bold text-amber-300 border border-amber-400/50 uppercase">
+                        VIEW
                       </span>
                     </div>
                   </div>
                 ) : (
-                  <div className="aspect-[4/3] bg-linear-to-br from-yellow-500/10 to-orange-500/10 flex items-center justify-center">
-                    <Trophy className="w-10 h-10 text-yellow-400/40" />
+                  <div className="aspect-4/3 bg-[#130F23] flex items-center justify-center">
+                    <Trophy className="w-12 h-12 text-amber-400/40" />
                   </div>
                 )}
 
                 {/* Title */}
-                <div className="p-3">
-                  <p className="text-white text-sm font-medium line-clamp-2 leading-snug">
+                <div className="p-4">
+                  <p className="text-white text-xs font-bold font-mono uppercase line-clamp-2 leading-snug">
                     {cert.title}
                   </p>
                 </div>
@@ -110,12 +105,12 @@ export default function HackathonCertificates({ certificates }: Props) {
         </div>
       </div>
 
-      {/* Lightbox */}
+      {/* Lightbox Modal */}
       {selected !== null && (certificates[selected]?.image || certificates[selected]?.hasImage) && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl"
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#07050E]/95 backdrop-blur-2xl"
           onClick={() => setSelected(null)}>
           <div className="relative max-w-4xl w-full" onClick={(e) => e.stopPropagation()}>
-            <div className="relative rounded-2xl overflow-hidden border border-slate-800/50 bg-[#0D1424]">
+            <div className="relative rounded-3xl overflow-hidden border border-purple-500/30 bg-[#0E0B19] shadow-2xl shadow-black">
               <img
                 src={certificates[selected].image || `/api/image/hackathons/${certificates[selected]._id}`}
                 alt={certificates[selected].title}
@@ -124,30 +119,29 @@ export default function HackathonCertificates({ certificates }: Props) {
 
               <button
                 onClick={handlePrev}
-                className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 border border-white/10 flex items-center justify-center hover:bg-yellow-500/20 transition-colors"
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#0E0B19]/80 border border-purple-500/40 flex items-center justify-center hover:border-amber-400 text-white transition-colors"
               >
-                <ChevronLeft className="w-4 h-4 text-white" />
+                <ChevronLeft className="w-5 h-5" />
               </button>
               <button
                 onClick={handleNext}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 border border-white/10 flex items-center justify-center hover:bg-yellow-500/20 transition-colors"
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#0E0B19]/80 border border-purple-500/40 flex items-center justify-center hover:border-amber-400 text-white transition-colors"
               >
-                <ChevronRight className="w-4 h-4 text-white" />
+                <ChevronRight className="w-5 h-5" />
               </button>
               <button
                 onClick={() => setSelected(null)}
-                className="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/50 border border-white/10 flex items-center justify-center hover:bg-red-500/20 transition-colors"
+                className="absolute top-4 right-4 w-10 h-10 rounded-full bg-[#0E0B19] border border-amber-400/40 flex items-center justify-center hover:bg-red-500/20 text-amber-400 transition-colors"
               >
-                <X className="w-4 h-4 text-white" />
+                <X className="w-5 h-5" />
               </button>
 
-              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-black/60 backdrop-blur-sm rounded-full border border-white/10">
-                <span className="text-xs text-white">{selected + 1} / {certificates.length}</span>
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-[#0E0B19]/90 backdrop-blur-md rounded-full border border-amber-400/40">
+                <span className="text-xs font-mono font-bold text-amber-300">{selected + 1} / {certificates.length}</span>
               </div>
             </div>
 
-            {/* Title below image */}
-            <p className="text-center text-white font-medium mt-3 text-sm">
+            <p className="text-center text-white font-bold uppercase mt-4 text-sm font-mono">
               {certificates[selected].title}
             </p>
           </div>
