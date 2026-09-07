@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import {
   Github, Star, GitFork, Flame, Code2, Trophy,
-  Zap, TrendingUp, Activity
+  Zap, TrendingUp
 } from 'lucide-react'
 
 interface GitHubData {
@@ -351,12 +351,12 @@ export default function Stats() {
                 className="relative group"
               >
                 <div className="relative bg-[#0d1117] rounded-3xl border border-[#30363d] overflow-hidden hover:border-[#2ea043]/60 transition-all duration-400 shadow-2xl">
-                  {/* Top GitHub Black to Green Accent Bar */}
-                  <div className="h-1 bg-linear-to-r from-black via-[#0e4429] via-[#2ea043] to-[#3fb950]" />
+                  {/* Top GitHub Green & Black Gradient Bar */}
+                  <div className="h-1 bg-linear-to-r from-[#2ea043] via-[#0e4429] to-black" />
 
                   <div className="p-5 sm:p-8">
                     {/* Header */}
-                    <div className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-4 mb-6 pb-4 border-b border-[#30363d]">
+                    <div className="flex items-center justify-between gap-4 mb-6 pb-4 border-b border-[#30363d]">
                       <div className="flex items-center gap-3.5">
                         <div className="w-11 h-11 rounded-2xl bg-[#161b22] border border-[#30363d] flex items-center justify-center shadow-md">
                           <Github className="w-5 h-5 text-[#3fb950]" />
@@ -372,10 +372,6 @@ export default function Stats() {
                             @{github.username}
                           </a>
                         </div>
-                      </div>
-                      <div className="flex items-center gap-2 px-3 py-1 bg-[#238636]/20 border border-[#2ea043]/40 rounded-full">
-                        <div className="w-2 h-2 bg-[#3fb950] rounded-full animate-pulse" />
-                        <span className="text-[10px] text-[#3fb950] font-mono font-bold uppercase">LIVE API</span>
                       </div>
                     </div>
 
@@ -419,12 +415,12 @@ export default function Stats() {
                 className="relative group"
               >
                 <div className="relative bg-[#0f0f0f] rounded-3xl border border-[#ffa116]/30 overflow-hidden hover:border-[#ffa116]/60 transition-all duration-400 shadow-2xl hover:shadow-[0_10px_40px_rgba(255,161,22,0.15)]">
-                  {/* Top LeetCode Black to Gold Accent Bar */}
-                  <div className="h-1 bg-linear-to-r from-black via-[#d49400] to-[#ffa116]" />
+                  {/* Top LeetCode Gold to Black Accent Bar */}
+                  <div className="h-1 bg-linear-to-r from-[#ffa116] via-[#d49400] to-black" />
 
                   <div className="p-5 sm:p-8">
                     {/* Header */}
-                    <div className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-4 mb-6 pb-4 border-b border-[#ffa116]/20">
+                    <div className="flex items-center justify-between gap-4 mb-6 pb-4 border-b border-[#ffa116]/20">
                       <div className="flex items-center gap-3.5">
                         <div className="w-11 h-11 rounded-2xl bg-[#161616] border border-[#ffa116]/30 flex items-center justify-center text-xl shadow-md">
                           <span className="text-[#ffa116] font-bold">⚡</span>
@@ -440,10 +436,6 @@ export default function Stats() {
                             @{leetcode.username}
                           </a>
                         </div>
-                      </div>
-                      <div className="flex items-center gap-2 px-3 py-1 bg-[#ffa116]/10 border border-[#ffa116]/30 rounded-full">
-                        <div className="w-2 h-2 bg-[#ffa116] rounded-full animate-pulse" />
-                        <span className="text-[10px] text-[#ffa116] font-mono font-bold uppercase">LIVE API</span>
                       </div>
                     </div>
 
@@ -478,15 +470,6 @@ export default function Stats() {
 
           </div>
         )}
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.8 }}
-          className="text-center text-xs text-amber-400/80 font-mono mt-8 tracking-[0.25em] uppercase"
-        >
-          • DATA AUTOMATICALLY REFRESHED FROM PUBLIC APIS •
-        </motion.p>
       </div>
     </section>
   )
