@@ -113,11 +113,37 @@ body {
 }
 
 /* ── Sleek Glowing Scrollbar ── */
-::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: #07050E; }
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(to bottom, #9333EA, #F59E0B);
   border-radius: 3px;
+}
+
+/* GitHub Scrollbar - Dark Green Gradient */
+.github-scrollbar::-webkit-scrollbar {
+  height: 6px;
+}
+.github-scrollbar::-webkit-scrollbar-track {
+  background: #161b22;
+  border-radius: 9999px;
+}
+.github-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(to right, #0e4429, #2ea043, #3fb950);
+  border-radius: 9999px;
+}
+
+/* LeetCode Scrollbar - Dark Gold Gradient */
+.leetcode-scrollbar::-webkit-scrollbar {
+  height: 6px;
+}
+.leetcode-scrollbar::-webkit-scrollbar-track {
+  background: #222222;
+  border-radius: 9999px;
+}
+.leetcode-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(to right, #5e4200, #d49400, #ffa116);
+  border-radius: 9999px;
 }
 
 /* ── Keyframe Animations ── */

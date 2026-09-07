@@ -90,7 +90,7 @@ function GithubHeatmap({ data }: { data: { date: string; count: number }[] }) {
   })
 
   return (
-    <div className="overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-emerald-600/30">
+    <div className="overflow-x-auto pb-2 github-scrollbar">
       <div className="relative min-w-max">
         <div className="flex mb-1" style={{ paddingLeft: '0px' }}>
           {monthLabels.map((m, i) => (
@@ -166,7 +166,7 @@ function LeetHeatmap({ data }: { data: { date: string; count: number }[] }) {
   })
 
   return (
-    <div className="overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-amber-600/30">
+    <div className="overflow-x-auto pb-2 leetcode-scrollbar">
       <div className="min-w-max">
         <div className="flex gap-[3px]">
           {weeks.map((w, wi) => (
