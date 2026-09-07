@@ -36,10 +36,9 @@ export default function Skills({ skills }: Props) {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+          className="text-center mb-8"
         >
-          <span className="section-label">TECHNICAL EXPERTISE</span>
-          <h2 className="section-heading mb-3">
+          <h2 className="section-heading">
             SKILLS &{' '}
             <span className="text-gold-gradient">
               PROFICIENCIES

@@ -67,18 +67,14 @@ export default function Contact({ settings }: ContactProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+          className="text-center mb-8"
         >
-          <span className="section-label">INITIATE COLLABORATION</span>
-          <h2 className="section-heading mb-3">
+          <h2 className="section-heading">
             GET IN{' '}
             <span className="text-gold-gradient">
               TOUCH
             </span>
           </h2>
-          <p className="text-slate-400 max-w-md mx-auto text-xs font-mono tracking-wider uppercase">
-            HAVE A PROJECT IN MIND OR WANT TO DISCUSS COLLABORATION? SEND A DIRECT MESSAGE.
-          </p>
         </motion.div>
 
         <div className="grid lg:grid-cols-12 gap-8">

@@ -46,7 +46,7 @@ export default function Hero({ settings }: HeroProps) {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center px-6 pt-32 pb-24 overflow-hidden bg-[#07050E]"
+      className="relative min-h-screen flex items-center justify-center px-6 pt-28 pb-12 md:pb-16 overflow-hidden bg-[#07050E]"
     >
       {/* Background ambient lighting */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -73,11 +73,6 @@ export default function Hero({ settings }: HeroProps) {
             className="lg:col-span-7 space-y-6"
           >
             <div>
-              <p className="text-amber-400 text-xs font-mono tracking-[0.3em] uppercase mb-3 flex items-center gap-2">
-                <span className="w-6 h-px bg-amber-400/60" />
-                WELCOME TO MY PORTFOLIO
-              </p>
-
               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-white uppercase leading-[0.95] mb-4">
                 {name}
               </h1>
@@ -175,31 +170,6 @@ export default function Hero({ settings }: HeroProps) {
             </div>
           </motion.div>
         </div>
-
-        {/* Minimal Scroll Down Trigger */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
-          className="flex justify-center mt-16"
-        >
-          <button
-            onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-            className="flex flex-col items-center gap-2 group cursor-pointer"
-            aria-label="Scroll to About"
-          >
-            <span className="text-[10px] font-mono tracking-[0.3em] text-amber-400/80 group-hover:text-amber-400 transition-colors uppercase">
-              SCROLL DOWN
-            </span>
-            <div className="w-5 h-9 border-2 border-purple-500/40 rounded-full flex justify-center pt-1.5 group-hover:border-amber-400 transition-colors">
-              <motion.div
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 1.8, repeat: Infinity }}
-                className="w-1 h-2 bg-amber-400 rounded-full"
-              />
-            </div>
-          </button>
-        </motion.div>
       </div>
     </section>
   )

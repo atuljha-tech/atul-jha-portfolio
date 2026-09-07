@@ -51,18 +51,14 @@ export default function Projects({ projects }: Props) {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-center mb-14"
+          className="text-center mb-8"
         >
-          <span className="section-label">SELECTED WORKS</span>
-          <h2 className="section-heading mb-3">
+          <h2 className="section-heading">
             FEATURED{' '}
             <span className="text-gold-gradient">
               PROJECTS
             </span>
           </h2>
-          <p className="text-slate-400 max-w-lg mx-auto text-xs font-mono tracking-wider uppercase">
-            EXPLORE REAL-WORLD SYSTEMS, ARCHITECTURES & APPLICATIONS
-          </p>
         </motion.div>
 
         {/* Filter tabs */}

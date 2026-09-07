@@ -55,7 +55,7 @@ export default function About({ settings }: AboutProps) {
     <section
       ref={ref}
       id="about"
-      className="relative py-24 px-6 overflow-hidden bg-[#07050E]"
+      className="relative py-14 md:py-16 px-6 overflow-hidden bg-[#07050E]"
     >
       <div className="relative z-10 max-w-5xl mx-auto">
 
@@ -64,10 +64,9 @@ export default function About({ settings }: AboutProps) {
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.55 }}
-          className="text-center mb-14"
+          className="text-center mb-8"
         >
-          <span className="section-label">BACKGROUND</span>
-          <h2 className="section-heading mt-2">
+          <h2 className="section-heading">
             ABOUT{' '}
             <span className="text-gold-gradient">
               ME

@@ -36,7 +36,7 @@ export default function HackathonCertificates({ certificates }: Props) {
     <section
       ref={ref}
       id="hackathons"
-      className="relative py-28 px-6 overflow-hidden bg-[#07050E]"
+      className="relative py-14 md:py-16 px-6 overflow-hidden bg-[#07050E]"
     >
       <div className="bg-glow-purple w-[500px] h-[500px] top-10 -left-20" />
       <div className="bg-glow-gold w-[450px] h-[450px] bottom-10 -right-20" />
@@ -47,10 +47,9 @@ export default function HackathonCertificates({ certificates }: Props) {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8"
         >
-          <span className="section-label">COMPETITION HONORS</span>
-          <h2 className="section-heading mb-3">
+          <h2 className="section-heading">
             HACKATHON{' '}
             <span className="text-gold-gradient">
               CERTIFICATES
